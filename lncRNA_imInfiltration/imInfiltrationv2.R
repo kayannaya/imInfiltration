@@ -81,7 +81,7 @@ bioc_pkgs <- c("TCGAbiolinks", "SummarizedExperiment", "SingleCellExperiment",
                "DESeq2", "limma", "GSVA", "clusterProfiler", "org.Hs.eg.db",
                "survminer")
 cran_pkgs <- c("tidyverse", "survival", "dplyr", "purrr", "readxl", "sva",
-               "immunedeconv", "googledrive")
+               "googledrive")
 
 for (pkg in bioc_pkgs) {
   if (!requireNamespace(pkg, quietly = TRUE)) BiocManager::install(pkg, ask = FALSE)
@@ -97,25 +97,22 @@ remotes::install_github("omnideconv/immunedeconv", upgrade = "never")
 
 """Load all libraries"""
 
-suppressPackageStartupMessages({
-  library(TCGAbiolinks)
-  library(SummarizedExperiment)
-  library(SingleCellExperiment)
-  library(DESeq2)
-  library(limma)
-  library(GSVA)
-  library(clusterProfiler)
-  library(org.Hs.eg.db)
-  library(survival)
-  library(survminer)
-  library(tidyverse)
-  library(dplyr)
-  library(purrr)
-  library(readxl)
-  library(immunedeconv)
-  library(googledrive)
-})
-cat("All packages loaded successfully\n")
+library(dplyr)
+library(tidyverse)
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+library(SingleCellExperiment)
+library(DESeq2)
+library(limma)
+library(GSVA)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(survival)
+library(survminer)
+library(purrr)
+library(readxl)
+library(immunedeconv)
+library(googledrive)
 
 """## Obtaining TCGA Data
 
@@ -151,8 +148,8 @@ BRCA_tpm <- expr_tpm_mrna_symbol %>%
   mutate(meanrow = rowMeans(.[, -1]), .before = 2) %>%
   filter(meanrow >= 1) %>%
   arrange(desc(meanrow)) %>%
-  distinct(symbol_mrna, .keep_all = TRUE) %>%
-  select(-meanrow) %>%
+  dplyr::distinct(symbol_mrna, .keep_all = TRUE) %>%
+  dplyr::select(-meanrow) %>%          # explicit namespace
   column_to_rownames(var = "symbol_mrna") %>%
   as.data.frame()
 
@@ -265,7 +262,7 @@ for (method_name in names(deconvoluted)) {
 #### Upload and clean CNV file
 """
 
-cnv_path <- download_from_drive("TCGA_BRCA_Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes")
+cnv_path = "/content/TCGA.BRCA.sampleMap_Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes (1).gz"
 
 BRCA_cnv              <- read.delim(cnv_path, header = TRUE, check.names = FALSE)
 rownames(BRCA_cnv)    <- BRCA_cnv$`Gene Symbol`
@@ -313,6 +310,16 @@ filtered_cnv_results   <- keep(cnv_results, ~ length(.$neg_cnv_bottom_30) >= 30 
 final_BRCA_cnv_results <- discard(filtered_cnv_results, ~ any(is.na(unlist(.x))))
 
 cat("Genes passing CNV filter:", length(final_BRCA_cnv_results), "\n")
+
+dim(BRCA_cnv)
+dim(clean_BRCA_tpm)
+
+length(intersect(colnames(clean_BRCA_tpm), colnames(BRCA_cnv)))
+length(intersect(rownames(clean_BRCA_tpm), rownames(BRCA_cnv)))
+
+colnames(clean_BRCA_tpm)
+
+head(colnames(BRCA_cnv), 10)
 
 """### Correlation with TIL abundance
 
