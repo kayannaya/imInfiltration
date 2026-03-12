@@ -1,0 +1,250 @@
+PATIENT_ID	THERAPEUTIC_AGENT	TREATMENT_OUTCOME	barcode	RESPONSE_GROUP
+TCGA-A6-2671	Irinotecan	Progressive Disease	TCGA-A6-2671	Non-Response
+TCGA-A6-2671	Fluorouracil	Progressive Disease	TCGA-A6-2671	Non-Response
+TCGA-A6-2671	Leucovorin	Progressive Disease	TCGA-A6-2671	Non-Response
+TCGA-A6-2671	Bevacizumab	Progressive Disease	TCGA-A6-2671	Non-Response
+TCGA-A6-2671	Cetuximab	Progressive Disease	TCGA-A6-2671	Non-Response
+TCGA-A6-5664	Irinotecan	Progressive Disease	TCGA-A6-5664	Non-Response
+TCGA-A6-5664	Bevacizumab	Progressive Disease	TCGA-A6-5664	Non-Response
+TCGA-A6-5664	Leucovorin	Progressive Disease	TCGA-A6-5664	Non-Response
+TCGA-A6-5664	Fluorouracil	Progressive Disease	TCGA-A6-5664	Non-Response
+TCGA-A6-6652	Oxaliplatin	Stable Disease	TCGA-A6-6652	Non-Response
+TCGA-A6-A566	Oxaliplatin	Progressive Disease	TCGA-A6-A566	Non-Response
+TCGA-A6-A566	Fluorouracil	Progressive Disease	TCGA-A6-A566	Non-Response
+TCGA-A6-A566	Leucovorin	Progressive Disease	TCGA-A6-A566	Non-Response
+TCGA-A6-A56B	Fluorouracil	Complete Response	TCGA-A6-A56B	Response
+TCGA-A6-A56B	Leucovorin	Complete Response	TCGA-A6-A56B	Response
+TCGA-A6-A56B	Oxaliplatin	Complete Response	TCGA-A6-A56B	Response
+TCGA-A6-A56B	Cetuximab	Complete Response	TCGA-A6-A56B	Response
+TCGA-A6-A5ZU	Oxaliplatin	Complete Response	TCGA-A6-A5ZU	Response
+TCGA-A6-A5ZU	Leucovorin	Complete Response	TCGA-A6-A5ZU	Response
+TCGA-A6-A5ZU	Fluorouracil	Complete Response	TCGA-A6-A5ZU	Response
+TCGA-AA-3494	Leucovorin Calcium	Partial Response	TCGA-AA-3494	Response
+TCGA-AA-3494	Fluorouracil	Partial Response	TCGA-AA-3494	Response
+TCGA-AA-3494	Capecitabine	Stable Disease	TCGA-AA-3494	Non-Response
+TCGA-AA-3494	Oxaliplatin	Partial Response	TCGA-AA-3494	Response
+TCGA-AA-3494	Irinotecan	Stable Disease	TCGA-AA-3494	Non-Response
+TCGA-AA-3494	Cetuximab	Stable Disease	TCGA-AA-3494	Non-Response
+TCGA-AA-3517	Leucovorin Calcium	Complete Response	TCGA-AA-3517	Response
+TCGA-AA-3517	Fluorouracil	Complete Response	TCGA-AA-3517	Response
+TCGA-AA-3517	Irinotecan	Complete Response	TCGA-AA-3517	Response
+TCGA-AA-3517	Oxaliplatin	Complete Response	TCGA-AA-3517	Response
+TCGA-AA-3517	Bevacizumab	Complete Response	TCGA-AA-3517	Response
+TCGA-AA-3542	Leucovorin Calcium	Complete Response	TCGA-AA-3542	Response
+TCGA-AA-3542	Fluorouracil	Complete Response	TCGA-AA-3542	Response
+TCGA-AA-3542	Oxaliplatin	Complete Response	TCGA-AA-3542	Response
+TCGA-AA-3548	Leucovorin Calcium	Complete Response	TCGA-AA-3548	Response
+TCGA-AA-3548	Fluorouracil	Complete Response	TCGA-AA-3548	Response
+TCGA-AA-3548	Irinotecan	Complete Response	TCGA-AA-3548	Response
+TCGA-AA-3560	Leucovorin Calcium	Complete Response	TCGA-AA-3560	Response
+TCGA-AA-3560	Fluorouracil	Complete Response	TCGA-AA-3560	Response
+TCGA-AA-3560	Oxaliplatin	Complete Response	TCGA-AA-3560	Response
+TCGA-AA-3562	Leucovorin Calcium	Complete Response	TCGA-AA-3562	Response
+TCGA-AA-3562	Fluorouracil	Complete Response	TCGA-AA-3562	Response
+TCGA-AA-3562	Oxaliplatin	Complete Response	TCGA-AA-3562	Response
+TCGA-AA-3662	Capecitabine	Partial Response	TCGA-AA-3662	Response
+TCGA-AA-3678	Leucovorin Calcium	Complete Response	TCGA-AA-3678	Response
+TCGA-AA-3678	Fluorouracil	Complete Response	TCGA-AA-3678	Response
+TCGA-AA-3680	Leucovorin Calcium	Progressive Disease	TCGA-AA-3680	Non-Response
+TCGA-AA-3680	Fluorouracil	Progressive Disease	TCGA-AA-3680	Non-Response
+TCGA-AA-3680	Oxaliplatin	Progressive Disease	TCGA-AA-3680	Non-Response
+TCGA-AA-3692	Leucovorin Calcium	Progressive Disease	TCGA-AA-3692	Non-Response
+TCGA-AA-3692	Fluorouracil	Progressive Disease	TCGA-AA-3692	Non-Response
+TCGA-AA-3692	Irinotecan	Progressive Disease	TCGA-AA-3692	Non-Response
+TCGA-AA-3692	Bevacizumab	Progressive Disease	TCGA-AA-3692	Non-Response
+TCGA-AA-3692	Cetuximab	Progressive Disease	TCGA-AA-3692	Non-Response
+TCGA-AA-3713	Fluorouracil	Partial Response	TCGA-AA-3713	Response
+TCGA-AA-3841	Leucovorin Calcium	Complete Response	TCGA-AA-3841	Response
+TCGA-AA-3841	Fluorouracil	Complete Response	TCGA-AA-3841	Response
+TCGA-AA-3841	Oxaliplatin	Complete Response	TCGA-AA-3841	Response
+TCGA-AA-3844	Capecitabine	Progressive Disease	TCGA-AA-3844	Non-Response
+TCGA-AA-3844	Leucovorin Calcium	Progressive Disease	TCGA-AA-3844	Non-Response
+TCGA-AA-3844	Fluorouracil	Progressive Disease	TCGA-AA-3844	Non-Response
+TCGA-AA-3844	Oxaliplatin	Progressive Disease	TCGA-AA-3844	Non-Response
+TCGA-AA-3844	Bevacizumab	Progressive Disease	TCGA-AA-3844	Non-Response
+TCGA-AA-3860	Leucovorin Calcium	Complete Response	TCGA-AA-3860	Response
+TCGA-AA-3860	Fluorouracil	Complete Response	TCGA-AA-3860	Response
+TCGA-AA-3860	Oxaliplatin	Complete Response	TCGA-AA-3860	Response
+TCGA-AA-3869	Capecitabine	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3869	Leucovorin Calcium	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3869	Fluorouracil	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3869	Irinotecan	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3869	Bevacizumab	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3869	Cetuximab	Partial Response	TCGA-AA-3869	Response
+TCGA-AA-3870	Leucovorin Calcium	Complete Response	TCGA-AA-3870	Response
+TCGA-AA-3870	Fluorouracil	Complete Response	TCGA-AA-3870	Response
+TCGA-AA-3870	Oxaliplatin	Complete Response	TCGA-AA-3870	Response
+TCGA-AA-3955	Capecitabine	Complete Response	TCGA-AA-3955	Response
+TCGA-AA-3955	Oxaliplatin	Complete Response	TCGA-AA-3955	Response
+TCGA-AA-3967	Leucovorin Calcium	Complete Response	TCGA-AA-3967	Response
+TCGA-AA-3967	Fluorouracil	Complete Response	TCGA-AA-3967	Response
+TCGA-AA-3967	Oxaliplatin	Complete Response	TCGA-AA-3967	Response
+TCGA-AA-3971	Leucovorin Calcium	Complete Response	TCGA-AA-3971	Response
+TCGA-AA-3971	Fluorouracil	Complete Response	TCGA-AA-3971	Response
+TCGA-AA-3971	Oxaliplatin	Complete Response	TCGA-AA-3971	Response
+TCGA-AA-3972	Capecitabine	Progressive Disease	TCGA-AA-3972	Non-Response
+TCGA-AA-3972	Oxaliplatin	Progressive Disease	TCGA-AA-3972	Non-Response
+TCGA-AA-3972	Leucovorin Calcium	Progressive Disease	TCGA-AA-3972	Non-Response
+TCGA-AA-3972	Fluorouracil	Progressive Disease	TCGA-AA-3972	Non-Response
+TCGA-AA-3972	Bevacizumab	Progressive Disease	TCGA-AA-3972	Non-Response
+TCGA-AA-3973	Leucovorin Calcium	Stable Disease	TCGA-AA-3973	Non-Response
+TCGA-AA-3973	Fluorouracil	Stable Disease	TCGA-AA-3973	Non-Response
+TCGA-AA-3973	Irinotecan	Stable Disease	TCGA-AA-3973	Non-Response
+TCGA-AA-3976	Leucovorin Calcium	Complete Response	TCGA-AA-3976	Response
+TCGA-AA-3976	Fluorouracil	Complete Response	TCGA-AA-3976	Response
+TCGA-AA-3976	Oxaliplatin	Complete Response	TCGA-AA-3976	Response
+TCGA-AA-3994	Capecitabine	Complete Response	TCGA-AA-3994	Response
+TCGA-AA-A00F	Leucovorin Calcium	Partial Response	TCGA-AA-A00F	Response
+TCGA-AA-A00F	Fluorouracil	Partial Response	TCGA-AA-A00F	Response
+TCGA-AA-A00F	Oxaliplatin	Partial Response	TCGA-AA-A00F	Response
+TCGA-AA-A00J	Fluorouracil	Partial Response	TCGA-AA-A00J	Response
+TCGA-AA-A00Q	Leucovorin Calcium	Complete Response	TCGA-AA-A00Q	Response
+TCGA-AA-A00Q	Fluorouracil	Complete Response	TCGA-AA-A00Q	Response
+TCGA-AA-A00Q	Oxaliplatin	Complete Response	TCGA-AA-A00Q	Response
+TCGA-AA-A00U	Leucovorin Calcium	Complete Response	TCGA-AA-A00U	Response
+TCGA-AA-A00U	Fluorouracil	Complete Response	TCGA-AA-A00U	Response
+TCGA-AA-A00U	Oxaliplatin	Complete Response	TCGA-AA-A00U	Response
+TCGA-AA-A010	Leucovorin Calcium	Complete Response	TCGA-AA-A010	Response
+TCGA-AA-A010	Fluorouracil	Complete Response	TCGA-AA-A010	Response
+TCGA-AA-A010	Oxaliplatin	Complete Response	TCGA-AA-A010	Response
+TCGA-AA-A01D	Capecitabine	Progressive Disease	TCGA-AA-A01D	Non-Response
+TCGA-AA-A01D	Oxaliplatin	Progressive Disease	TCGA-AA-A01D	Non-Response
+TCGA-AA-A01D	Irinotecan	Progressive Disease	TCGA-AA-A01D	Non-Response
+TCGA-AA-A01D	Bevacizumab	Progressive Disease	TCGA-AA-A01D	Non-Response
+TCGA-AA-A01D	Panitumumab	Progressive Disease	TCGA-AA-A01D	Non-Response
+TCGA-AA-A01F	Leucovorin Calcium	Complete Response	TCGA-AA-A01F	Response
+TCGA-AA-A01F	Fluorouracil	Complete Response	TCGA-AA-A01F	Response
+TCGA-AA-A01F	Oxaliplatin	Complete Response	TCGA-AA-A01F	Response
+TCGA-AA-A01K	Leucovorin Calcium	Complete Response	TCGA-AA-A01K	Response
+TCGA-AA-A01K	Fluorouracil	Complete Response	TCGA-AA-A01K	Response
+TCGA-AA-A01K	Oxaliplatin	Complete Response	TCGA-AA-A01K	Response
+TCGA-AA-A01R	Fluorouracil	Partial Response	TCGA-AA-A01R	Response
+TCGA-AA-A01R	Leucovorin Calcium	Partial Response	TCGA-AA-A01R	Response
+TCGA-AA-A01R	Irinotecan	Partial Response	TCGA-AA-A01R	Response
+TCGA-AA-A01T	Fluorouracil	Complete Response	TCGA-AA-A01T	Response
+TCGA-AA-A01T	Leucovorin Calcium	Complete Response	TCGA-AA-A01T	Response
+TCGA-AA-A02F	Leucovorin Calcium	Partial Response	TCGA-AA-A02F	Response
+TCGA-AA-A02F	Fluorouracil	Partial Response	TCGA-AA-A02F	Response
+TCGA-AA-A02F	Irinotecan	Partial Response	TCGA-AA-A02F	Response
+TCGA-AA-A02F	Oxaliplatin	Partial Response	TCGA-AA-A02F	Response
+TCGA-AA-A02F	Bevacizumab	Partial Response	TCGA-AA-A02F	Response
+TCGA-AA-A02K	Leucovorin Calcium	Progressive Disease	TCGA-AA-A02K	Non-Response
+TCGA-AA-A02K	Fluorouracil	Progressive Disease	TCGA-AA-A02K	Non-Response
+TCGA-AA-A02K	Irinotecan	Progressive Disease	TCGA-AA-A02K	Non-Response
+TCGA-AA-A02K	Bevacizumab	Progressive Disease	TCGA-AA-A02K	Non-Response
+TCGA-AD-6889	Capecitabine	Complete Response	TCGA-AD-6889	Response
+TCGA-AD-6901	Capecitabine	Complete Response	TCGA-AD-6901	Response
+TCGA-AD-6964	Leucovorin Calcium	Progressive Disease	TCGA-AD-6964	Non-Response
+TCGA-AD-6964	Fluorouracil	Progressive Disease	TCGA-AD-6964	Non-Response
+TCGA-AD-6964	Oxaliplatin	Progressive Disease	TCGA-AD-6964	Non-Response
+TCGA-AD-6965	Oxaliplatin	Complete Response	TCGA-AD-6965	Response
+TCGA-AD-6965	Fluorouracil	Complete Response	TCGA-AD-6965	Response
+TCGA-AD-6965	Leucovorin	Complete Response	TCGA-AD-6965	Response
+TCGA-AY-A8YK	Fluorouracil	Complete Response	TCGA-AY-A8YK	Response
+TCGA-AY-A8YK	Oxaliplatin	Complete Response	TCGA-AY-A8YK	Response
+TCGA-AY-A8YK	Bevacizumab	Complete Response	TCGA-AY-A8YK	Response
+TCGA-AZ-4308	Bevacizumab	Complete Response	TCGA-AZ-4308	Response
+TCGA-AZ-4308	Leucovorin	Complete Response	TCGA-AZ-4308	Response
+TCGA-AZ-4616	Capecitabine	Stable Disease	TCGA-AZ-4616	Non-Response
+TCGA-AZ-4682	Irinotecan Hydrochloride	Progressive Disease	TCGA-AZ-4682	Non-Response
+TCGA-AZ-4682	Leucovorin Calcium	Progressive Disease	TCGA-AZ-4682	Non-Response
+TCGA-AZ-4682	Fluorouracil	Progressive Disease	TCGA-AZ-4682	Non-Response
+TCGA-AZ-4684	Leucovorin Calcium	Progressive Disease	TCGA-AZ-4684	Non-Response
+TCGA-AZ-4684	Fluorouracil	Progressive Disease	TCGA-AZ-4684	Non-Response
+TCGA-AZ-4684	Oxaliplatin	Progressive Disease	TCGA-AZ-4684	Non-Response
+TCGA-AZ-6600	Irinotecan Hydrochloride	Progressive Disease	TCGA-AZ-6600	Non-Response
+TCGA-AZ-6600	Fluorouracil	Progressive Disease	TCGA-AZ-6600	Non-Response
+TCGA-AZ-6600	Leucovorin	Progressive Disease	TCGA-AZ-6600	Non-Response
+TCGA-AZ-6605	Leucovorin Calcium	Stable Disease	TCGA-AZ-6605	Non-Response
+TCGA-AZ-6605	Fluorouracil	Stable Disease	TCGA-AZ-6605	Non-Response
+TCGA-AZ-6605	Oxaliplatin	Stable Disease	TCGA-AZ-6605	Non-Response
+TCGA-AZ-6606	Leucovorin Calcium	Progressive Disease	TCGA-AZ-6606	Non-Response
+TCGA-AZ-6606	Fluorouracil	Progressive Disease	TCGA-AZ-6606	Non-Response
+TCGA-AZ-6606	Irinotecan	Progressive Disease	TCGA-AZ-6606	Non-Response
+TCGA-CA-5254	Oxaliplatin	Complete Response	TCGA-CA-5254	Response
+TCGA-CA-5254	Fluorouracil	Complete Response	TCGA-CA-5254	Response
+TCGA-CA-5254	Leucovorin Calcium	Complete Response	TCGA-CA-5254	Response
+TCGA-CA-5255	Oxaliplatin	Complete Response	TCGA-CA-5255	Response
+TCGA-CA-5255	Fluorouracil	Complete Response	TCGA-CA-5255	Response
+TCGA-CA-5255	Leucovorin Calcium	Complete Response	TCGA-CA-5255	Response
+TCGA-CA-5256	Oxaliplatin	Complete Response	TCGA-CA-5256	Response
+TCGA-CA-5256	Fluorouracil	Complete Response	TCGA-CA-5256	Response
+TCGA-CA-5256	Leucovorin Calcium	Complete Response	TCGA-CA-5256	Response
+TCGA-CA-5796	Oxaliplatin	Complete Response	TCGA-CA-5796	Response
+TCGA-CA-5796	Fluorouracil	Complete Response	TCGA-CA-5796	Response
+TCGA-CA-5796	Leucovorin Calcium	Complete Response	TCGA-CA-5796	Response
+TCGA-CA-6715	Oxaliplatin	Complete Response	TCGA-CA-6715	Response
+TCGA-CA-6715	Fluorouracil	Complete Response	TCGA-CA-6715	Response
+TCGA-CA-6715	Leucovorin Calcium	Complete Response	TCGA-CA-6715	Response
+TCGA-CA-6716	Oxaliplatin	Complete Response	TCGA-CA-6716	Response
+TCGA-CA-6716	Fluorouracil	Complete Response	TCGA-CA-6716	Response
+TCGA-CA-6716	Leucovorin Calcium	Complete Response	TCGA-CA-6716	Response
+TCGA-CA-6717	Oxaliplatin	Complete Response	TCGA-CA-6717	Response
+TCGA-CA-6717	Fluorouracil	Complete Response	TCGA-CA-6717	Response
+TCGA-CA-6717	Leucovorin Calcium	Complete Response	TCGA-CA-6717	Response
+TCGA-CK-4950	Oxaliplatin	Complete Response	TCGA-CK-4950	Response
+TCGA-CK-4950	Leucovorin	Complete Response	TCGA-CK-4950	Response
+TCGA-CK-4950	Fluorouracil	Complete Response	TCGA-CK-4950	Response
+TCGA-CM-4748	Oxaliplatin	Stable Disease	TCGA-CM-4748	Non-Response
+TCGA-CM-4748	Irinotecan Hydrochloride	Stable Disease	TCGA-CM-4748	Non-Response
+TCGA-CM-4748	Bevacizumab	Stable Disease	TCGA-CM-4748	Non-Response
+TCGA-CM-4748	Floxuridine	Stable Disease	TCGA-CM-4748	Non-Response
+TCGA-CM-4748	Leucovorin Calcium	Stable Disease	TCGA-CM-4748	Non-Response
+TCGA-D5-6533	Leucovorin Calcium	Complete Response	TCGA-D5-6533	Response
+TCGA-D5-6533	Fluorouracil	Complete Response	TCGA-D5-6533	Response
+TCGA-D5-6533	Oxaliplatin	Complete Response	TCGA-D5-6533	Response
+TCGA-DM-A0XF	Leucovorin Calcium	Complete Response	TCGA-DM-A0XF	Response
+TCGA-DM-A0XF	Fluorouracil	Complete Response	TCGA-DM-A0XF	Response
+TCGA-F4-6569	Leucovorin	Complete Response	TCGA-F4-6569	Response
+TCGA-F4-6569	Fluorouracil	Complete Response	TCGA-F4-6569	Response
+TCGA-F4-6805	Capecitabine	Complete Response	TCGA-F4-6805	Response
+TCGA-F4-6806	Irinotecan	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Irinotecan Hydrochloride	Partial Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Fluorouracil	Partial Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Bevacizumab	Partial Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Leucovorin	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Fluorouracil	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Mitomycin	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Capecitabine	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Oxaliplatin	Complete Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Oxaliplatin	Partial Response	TCGA-F4-6806	Response
+TCGA-F4-6806	Leucovorin	Partial Response	TCGA-F4-6806	Response
+TCGA-F4-6807	Capecitabine	Complete Response	TCGA-F4-6807	Response
+TCGA-F4-6856	Leucovorin	Complete Response	TCGA-F4-6856	Response
+TCGA-F4-6856	Fluorouracil	Complete Response	TCGA-F4-6856	Response
+TCGA-NH-A50U	Leucovorin Calcium	Partial Response	TCGA-NH-A50U	Response
+TCGA-NH-A50U	Oxaliplatin	Partial Response	TCGA-NH-A50U	Response
+TCGA-NH-A50U	Bevacizumab	Progressive Disease	TCGA-NH-A50U	Non-Response
+TCGA-NH-A50U	Fluorouracil	Progressive Disease	TCGA-NH-A50U	Non-Response
+TCGA-NH-A50U	Capecitabine	Progressive Disease	TCGA-NH-A50U	Non-Response
+TCGA-NH-A50U	Regorafenib	Progressive Disease	TCGA-NH-A50U	Non-Response
+TCGA-NH-A50V	Fluorouracil	Complete Response	TCGA-NH-A50V	Response
+TCGA-NH-A50V	Oxaliplatin	Complete Response	TCGA-NH-A50V	Response
+TCGA-NH-A50V	Leucovorin	Complete Response	TCGA-NH-A50V	Response
+TCGA-NH-A6GA	Oxaliplatin	Progressive Disease	TCGA-NH-A6GA	Non-Response
+TCGA-NH-A6GA	Bevacizumab	Progressive Disease	TCGA-NH-A6GA	Non-Response
+TCGA-NH-A6GA	Leucovorin	Progressive Disease	TCGA-NH-A6GA	Non-Response
+TCGA-NH-A6GA	Fluorouracil	Progressive Disease	TCGA-NH-A6GA	Non-Response
+TCGA-NH-A6GA	Irinotecan	Progressive Disease	TCGA-NH-A6GA	Non-Response
+TCGA-NH-A6GB	Oxaliplatin	Progressive Disease	TCGA-NH-A6GB	Non-Response
+TCGA-NH-A6GB	Bevacizumab	Progressive Disease	TCGA-NH-A6GB	Non-Response
+TCGA-NH-A6GB	Leucovorin	Progressive Disease	TCGA-NH-A6GB	Non-Response
+TCGA-NH-A6GB	Fluorouracil	Progressive Disease	TCGA-NH-A6GB	Non-Response
+TCGA-NH-A8F7	Fluorouracil	Partial Response	TCGA-NH-A8F7	Response
+TCGA-NH-A8F7	Oxaliplatin	Partial Response	TCGA-NH-A8F7	Response
+TCGA-NH-A8F7	Bevacizumab	Partial Response	TCGA-NH-A8F7	Response
+TCGA-NH-A8F8	Fluorouracil	Progressive Disease	TCGA-NH-A8F8	Non-Response
+TCGA-QG-A5YV	Capecitabine	Complete Response	TCGA-QG-A5YV	Response
+TCGA-QG-A5YW	Capecitabine	Complete Response	TCGA-QG-A5YW	Response
+TCGA-QG-A5YW	Oxaliplatin	Complete Response	TCGA-QG-A5YW	Response
+TCGA-QG-A5YX	Capecitabine	Complete Response	TCGA-QG-A5YX	Response
+TCGA-RU-A8FL	Irinotecan	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Bevacizumab	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Leucovorin Calcium	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Fluorouracil	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Oxaliplatin	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Ziv-Aflibercept	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-RU-A8FL	Cetuximab	Progressive Disease	TCGA-RU-A8FL	Non-Response
+TCGA-SS-A7HO	Oxaliplatin	Complete Response	TCGA-SS-A7HO	Response
+TCGA-SS-A7HO	Fluorouracil	Complete Response	TCGA-SS-A7HO	Response
+TCGA-SS-A7HO	Leucovorin	Complete Response	TCGA-SS-A7HO	Response

@@ -30,7 +30,7 @@ treatment_raw <- read_tsv(TREATMENT_FILE, col_types = cols(.default = "c"))
 
 treatment <- treatment_raw %>%
   # drop other columns except these columns
-  select(PATIENT_ID, THERAPEUTIC_AGENT, TREATMENT_END_REASON) %>%
+  select(PATIENT_ID, THERAPEUTIC_AGENT, TREATMENT_OUTCOME) %>%
   
   # removes any accidental leading or trailing whitespace from every column 
   # — so for example if a cell in your data contains " complete response" (with a space at the start) or "Fluorouracil " (with a space at the end), 
@@ -38,19 +38,19 @@ treatment <- treatment_raw %>%
   mutate(across(everything(), str_trim)) %>%
   
   # filter the rows that has both columns' value present
-  filter(!is.na(THERAPEUTIC_AGENT), !is.na(TREATMENT_END_REASON), TREATMENT_END_REASON != "") %>%
+  filter(!is.na(THERAPEUTIC_AGENT), !is.na(TREATMENT_OUTCOME), TREATMENT_OUTCOME != "") %>%
   
   mutate(
     
     # shorten the PATIENT_ID barcode into 12 characters only
     barcode = str_sub(PATIENT_ID, 1, 12),
     
-    # groups the TREATMENT_END_REASON into two groups
+    # groups the TREATMENT_OUTCOME into two groups
     RESPONSE_GROUP = case_when(
-      str_to_lower(TREATMENT_END_REASON) %in% c("complete response", "partial response")   ~ "Response",
-      str_to_lower(TREATMENT_END_REASON) %in% c("stable disease",
-                                               "clinical progressive disease",
-                                               "radiographic progressive disease")        ~ "Non-Response",
+      str_to_lower(TREATMENT_OUTCOME) %in% c("complete response", "partial response")                        ~ "Response",
+      str_to_lower(TREATMENT_OUTCOME) %in% c("stable disease", "progressive disease",
+                                             "clinical progressive disease",
+                                             "radiographic progressive disease")                            ~ "Non-Response",
       TRUE ~ NA_character_
     )
   ) %>%
@@ -69,6 +69,11 @@ print(table(treatment$RESPONSE_GROUP))
 write_tsv(treatment,
           file.path(OUTPUT_DIR, "treatment_response.txt"))
 
+treatment_raw %>%
+  select(THERAPEUTIC_AGENT, TREATMENT_OUTCOME) %>%
+  distinct(TREATMENT_OUTCOME) %>%
+  print(n = 50)
+
 # load expression matrix
 
 expr_raw <- read_tsv(EXPRESSION_FILE,
@@ -78,29 +83,28 @@ expr_raw <- read_tsv(EXPRESSION_FILE,
 # map Entrez ID to Hugo gene symbol
 entrez_to_symbol <- AnnotationDbi::select(
   org.Hs.eg.db,
-  keys    = expr_raw$Entrez_Gene_Id,
+  keys    = na.omit(expr_raw$Entrez_Gene_Id),
   columns = "SYMBOL",
   keytype = "ENTREZID"
-) %>%
-  rename(Entrez_Gene_Id = ENTREZID, Hugo_Symbol = SYMBOL) %>%
-  filter(!is.na(Hugo_Symbol))
+)
+colnames(entrez_to_symbol) <- c("Entrez_Gene_Id", "Hugo_Symbol")
+entrez_to_symbol <- entrez_to_symbol[!is.na(entrez_to_symbol$Hugo_Symbol), ]
 
-expr_raw <- expr_raw %>%
-  left_join(entrez_to_symbol, by = "Entrez_Gene_Id") %>%
-  filter(!is.na(Hugo_Symbol))
+# get the Entrez ID for your gene of interest
+target_entrez <- entrez_to_symbol$Entrez_Gene_Id[entrez_to_symbol$Hugo_Symbol %in% GENES_OF_INTEREST]
+cat("Entrez IDs for", GENES_OF_INTEREST, ":", target_entrez, "\n")
 
-cat("\nGene found in matrix:", grep("TEX36", expr_raw$Hugo_Symbol, value = TRUE), "\n")
-
-expr_long <- expr_raw %>%
-  select(-Entrez_Gene_Id) %>%
-  filter(!is.na(Hugo_Symbol), Hugo_Symbol %in% GENES_OF_INTEREST) %>%
+# subset expression matrix using Entrez ID directly — no Hugo_Symbol column needed
+expr_long <- expr_raw[expr_raw$Entrez_Gene_Id %in% target_entrez, ] %>%
   pivot_longer(
-    cols      = -Hugo_Symbol,
+    cols      = -Entrez_Gene_Id,
     names_to  = "barcode_full",
     values_to = "expression"
   ) %>%
-  rename(gene = Hugo_Symbol) %>%
-  mutate(barcode = str_sub(barcode_full, 1, 12))
+  mutate(
+    gene   = GENES_OF_INTEREST[match(Entrez_Gene_Id, target_entrez)],
+    barcode = str_sub(barcode_full, 1, 12)
+  )
 
 cat("Expression rows for genes of interest:", nrow(expr_long), "\n")
 
