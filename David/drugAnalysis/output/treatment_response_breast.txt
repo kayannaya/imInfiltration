@@ -1,0 +1,615 @@
+PATIENT_ID	THERAPEUTIC_AGENT	TREATMENT_OUTCOME	barcode	RESPONSE_GROUP
+TCGA-4H-AAAK	Cyclophosphamide	Complete Response	TCGA-4H-AAAK	Response
+TCGA-4H-AAAK	Doxorubicin	Complete Response	TCGA-4H-AAAK	Response
+TCGA-4H-AAAK	Fluorouracil	Complete Response	TCGA-4H-AAAK	Response
+TCGA-5T-A9QA	Doxorubicin Hydrochloride	Complete Response	TCGA-5T-A9QA	Response
+TCGA-A2-A0CK	Docetaxel	Complete Response	TCGA-A2-A0CK	Response
+TCGA-A2-A0CL	Gemcitabine	Complete Response	TCGA-A2-A0CL	Response
+TCGA-A2-A0CO	Tamoxifen	Complete Response	TCGA-A2-A0CO	Response
+TCGA-A2-A0CR	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A0CR	Response
+TCGA-A2-A0CR	Cyclophosphamide	Complete Response	TCGA-A2-A0CR	Response
+TCGA-A2-A0CR	Paclitaxel	Complete Response	TCGA-A2-A0CR	Response
+TCGA-A2-A0CR	Tamoxifen	Complete Response	TCGA-A2-A0CR	Response
+TCGA-A2-A0EP	Cyclophosphamide	Complete Response	TCGA-A2-A0EP	Response
+TCGA-A2-A0EP	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A0EP	Response
+TCGA-A2-A0EP	Paclitaxel	Complete Response	TCGA-A2-A0EP	Response
+TCGA-A2-A0EP	Anastrozole	Complete Response	TCGA-A2-A0EP	Response
+TCGA-A2-A0EW	Anastrozole	Complete Response	TCGA-A2-A0EW	Response
+TCGA-A2-A0EW	Exemestane	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Zoledronic Acid	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Fulvestrant	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Denosumab	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Tamoxifen	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Pegylated Liposomal Doxorubicin Hydrochloride	Progressive Disease	TCGA-A2-A0EW	Non-Response
+TCGA-A2-A0EW	Letrozole	Complete Response	TCGA-A2-A0EW	Response
+TCGA-A2-A3XS	Cyclophosphamide	Complete Response	TCGA-A2-A3XS	Response
+TCGA-A2-A3XS	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A3XS	Response
+TCGA-A2-A3XS	Paclitaxel	Complete Response	TCGA-A2-A3XS	Response
+TCGA-A2-A3XS	Tamoxifen	Progressive Disease	TCGA-A2-A3XS	Non-Response
+TCGA-A2-A3XS	Docetaxel	Progressive Disease	TCGA-A2-A3XS	Non-Response
+TCGA-A2-A3XS	Bevacizumab	Progressive Disease	TCGA-A2-A3XS	Non-Response
+TCGA-A2-A3XS	Capecitabine	Progressive Disease	TCGA-A2-A3XS	Non-Response
+TCGA-A2-A3XS	Vinorelbine Tartrate	Progressive Disease	TCGA-A2-A3XS	Non-Response
+TCGA-A2-A3XT	Cyclophosphamide	Partial Response	TCGA-A2-A3XT	Response
+TCGA-A2-A3XT	Doxorubicin	Partial Response	TCGA-A2-A3XT	Response
+TCGA-A2-A3XT	Docetaxel	Partial Response	TCGA-A2-A3XT	Response
+TCGA-A2-A3XU	Anastrozole	Progressive Disease	TCGA-A2-A3XU	Non-Response
+TCGA-A2-A3XU	Capecitabine	Progressive Disease	TCGA-A2-A3XU	Non-Response
+TCGA-A2-A3XV	Carboplatin	Complete Response	TCGA-A2-A3XV	Response
+TCGA-A2-A3XV	Docetaxel	Complete Response	TCGA-A2-A3XV	Response
+TCGA-A2-A3XV	Trastuzumab	Complete Response	TCGA-A2-A3XV	Response
+TCGA-A2-A3XW	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A3XW	Response
+TCGA-A2-A3XW	Cyclophosphamide	Complete Response	TCGA-A2-A3XW	Response
+TCGA-A2-A3XW	Paclitaxel	Complete Response	TCGA-A2-A3XW	Response
+TCGA-A2-A3XX	Cyclophosphamide	Complete Response	TCGA-A2-A3XX	Response
+TCGA-A2-A3XX	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A3XX	Response
+TCGA-A2-A3XX	Paclitaxel	Complete Response	TCGA-A2-A3XX	Response
+TCGA-A2-A3XY	Docetaxel	Progressive Disease	TCGA-A2-A3XY	Non-Response
+TCGA-A2-A3XY	Denosumab	Progressive Disease	TCGA-A2-A3XY	Non-Response
+TCGA-A2-A3XY	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A3XY	Response
+TCGA-A2-A3XY	Cyclophosphamide	Complete Response	TCGA-A2-A3XY	Response
+TCGA-A2-A3XY	Paclitaxel	Complete Response	TCGA-A2-A3XY	Response
+TCGA-A2-A3XY	Carboplatin	Progressive Disease	TCGA-A2-A3XY	Non-Response
+TCGA-A2-A3XY	Gemcitabine	Progressive Disease	TCGA-A2-A3XY	Non-Response
+TCGA-A2-A3XZ	Carboplatin	Complete Response	TCGA-A2-A3XZ	Response
+TCGA-A2-A3XZ	Docetaxel	Complete Response	TCGA-A2-A3XZ	Response
+TCGA-A2-A3XZ	Trastuzumab	Complete Response	TCGA-A2-A3XZ	Response
+TCGA-A2-A3Y0	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A3Y0	Response
+TCGA-A2-A3Y0	Cyclophosphamide	Complete Response	TCGA-A2-A3Y0	Response
+TCGA-A2-A3Y0	Docetaxel	Complete Response	TCGA-A2-A3Y0	Response
+TCGA-A2-A4RY	Docetaxel	Complete Response	TCGA-A2-A4RY	Response
+TCGA-A2-A4RY	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A4RY	Response
+TCGA-A2-A4RY	Cyclophosphamide	Complete Response	TCGA-A2-A4RY	Response
+TCGA-A2-A4S2	Doxorubicin Hydrochloride	Complete Response	TCGA-A2-A4S2	Response
+TCGA-A2-A4S2	Cyclophosphamide	Complete Response	TCGA-A2-A4S2	Response
+TCGA-A2-A4S2	Paclitaxel	Complete Response	TCGA-A2-A4S2	Response
+TCGA-A7-A2KD	Trastuzumab	Complete Response	TCGA-A7-A2KD	Response
+TCGA-A7-A4SA	Doxorubicin	Complete Response	TCGA-A7-A4SA	Response
+TCGA-A7-A4SA	Cyclophosphamide	Complete Response	TCGA-A7-A4SA	Response
+TCGA-A7-A4SA	Paclitaxel	Complete Response	TCGA-A7-A4SA	Response
+TCGA-A7-A4SB	Docetaxel	Complete Response	TCGA-A7-A4SB	Response
+TCGA-A7-A4SB	Cyclophosphamide	Complete Response	TCGA-A7-A4SB	Response
+TCGA-A7-A4SD	Docetaxel	Complete Response	TCGA-A7-A4SD	Response
+TCGA-A7-A4SD	Cyclophosphamide	Complete Response	TCGA-A7-A4SD	Response
+TCGA-A7-A4SE	Doxorubicin Hydrochloride	Complete Response	TCGA-A7-A4SE	Response
+TCGA-A7-A4SE	Cyclophosphamide	Complete Response	TCGA-A7-A4SE	Response
+TCGA-A7-A4SE	Paclitaxel	Complete Response	TCGA-A7-A4SE	Response
+TCGA-A7-A4SF	Carboplatin	Complete Response	TCGA-A7-A4SF	Response
+TCGA-A7-A4SF	Docetaxel	Complete Response	TCGA-A7-A4SF	Response
+TCGA-A7-A4SF	Trastuzumab	Complete Response	TCGA-A7-A4SF	Response
+TCGA-A7-A5ZV	Doxorubicin	Complete Response	TCGA-A7-A5ZV	Response
+TCGA-A7-A5ZV	Cyclophosphamide	Complete Response	TCGA-A7-A5ZV	Response
+TCGA-A7-A5ZV	Paclitaxel	Complete Response	TCGA-A7-A5ZV	Response
+TCGA-A7-A5ZW	Cyclophosphamide	Complete Response	TCGA-A7-A5ZW	Response
+TCGA-A7-A5ZW	Docetaxel	Complete Response	TCGA-A7-A5ZW	Response
+TCGA-A7-A5ZX	Doxorubicin	Complete Response	TCGA-A7-A5ZX	Response
+TCGA-A7-A5ZX	Cyclophosphamide	Complete Response	TCGA-A7-A5ZX	Response
+TCGA-A7-A5ZX	Paclitaxel	Complete Response	TCGA-A7-A5ZX	Response
+TCGA-A7-A6VV	Cyclophosphamide	Complete Response	TCGA-A7-A6VV	Response
+TCGA-A7-A6VV	Docetaxel	Complete Response	TCGA-A7-A6VV	Response
+TCGA-A7-A6VW	Paclitaxel	Complete Response	TCGA-A7-A6VW	Response
+TCGA-A7-A6VW	Doxorubicin	Complete Response	TCGA-A7-A6VW	Response
+TCGA-A7-A6VW	Cyclophosphamide	Complete Response	TCGA-A7-A6VW	Response
+TCGA-A7-A6VX	Docetaxel	Complete Response	TCGA-A7-A6VX	Response
+TCGA-A7-A6VX	Cyclophosphamide	Complete Response	TCGA-A7-A6VX	Response
+TCGA-A7-A6VY	Cyclophosphamide	Complete Response	TCGA-A7-A6VY	Response
+TCGA-A7-A6VY	Doxorubicin	Complete Response	TCGA-A7-A6VY	Response
+TCGA-A7-A6VY	Paclitaxel	Complete Response	TCGA-A7-A6VY	Response
+TCGA-A8-A06R	Fluorouracil	Complete Response	TCGA-A8-A06R	Response
+TCGA-A8-A06R	Doxorubicin	Complete Response	TCGA-A8-A06R	Response
+TCGA-A8-A06R	Cyclophosphamide	Complete Response	TCGA-A8-A06R	Response
+TCGA-A8-A06R	Tamoxifen	Complete Response	TCGA-A8-A06R	Response
+TCGA-A8-A075	Epirubicin	Complete Response	TCGA-A8-A075	Response
+TCGA-A8-A075	Cyclophosphamide	Complete Response	TCGA-A8-A075	Response
+TCGA-A8-A075	Docetaxel	Complete Response	TCGA-A8-A075	Response
+TCGA-A8-A07C	Fluorouracil	Complete Response	TCGA-A8-A07C	Response
+TCGA-A8-A07C	Epirubicin	Complete Response	TCGA-A8-A07C	Response
+TCGA-A8-A07C	Cyclophosphamide	Complete Response	TCGA-A8-A07C	Response
+TCGA-A8-A07C	Docetaxel	Complete Response	TCGA-A8-A07C	Response
+TCGA-A8-A07G	Fluorouracil	Complete Response	TCGA-A8-A07G	Response
+TCGA-A8-A07G	Methotrexate	Complete Response	TCGA-A8-A07G	Response
+TCGA-A8-A07G	Cyclophosphamide	Complete Response	TCGA-A8-A07G	Response
+TCGA-A8-A07I	Fluorouracil	Complete Response	TCGA-A8-A07I	Response
+TCGA-A8-A07I	Epirubicin	Complete Response	TCGA-A8-A07I	Response
+TCGA-A8-A07I	Cyclophosphamide	Complete Response	TCGA-A8-A07I	Response
+TCGA-A8-A07I	Docetaxel	Complete Response	TCGA-A8-A07I	Response
+TCGA-A8-A07I	Trastuzumab	Complete Response	TCGA-A8-A07I	Response
+TCGA-A8-A07J	Fluorouracil	Complete Response	TCGA-A8-A07J	Response
+TCGA-A8-A07J	Epirubicin	Complete Response	TCGA-A8-A07J	Response
+TCGA-A8-A07J	Cyclophosphamide	Complete Response	TCGA-A8-A07J	Response
+TCGA-A8-A07J	Docetaxel	Complete Response	TCGA-A8-A07J	Response
+TCGA-A8-A082	Fluorouracil	Complete Response	TCGA-A8-A082	Response
+TCGA-A8-A082	Epirubicin	Complete Response	TCGA-A8-A082	Response
+TCGA-A8-A082	Cyclophosphamide	Complete Response	TCGA-A8-A082	Response
+TCGA-A8-A082	Docetaxel	Complete Response	TCGA-A8-A082	Response
+TCGA-A8-A082	Exemestane	Complete Response	TCGA-A8-A082	Response
+TCGA-A8-A086	Docetaxel	Complete Response	TCGA-A8-A086	Response
+TCGA-A8-A086	Cyclophosphamide	Complete Response	TCGA-A8-A086	Response
+TCGA-A8-A08B	Fluorouracil	Complete Response	TCGA-A8-A08B	Response
+TCGA-A8-A08B	Epirubicin	Complete Response	TCGA-A8-A08B	Response
+TCGA-A8-A08B	Cyclophosphamide	Complete Response	TCGA-A8-A08B	Response
+TCGA-A8-A08B	Tamoxifen	Complete Response	TCGA-A8-A08B	Response
+TCGA-A8-A08B	Trastuzumab	Complete Response	TCGA-A8-A08B	Response
+TCGA-A8-A08C	Fluorouracil	Complete Response	TCGA-A8-A08C	Response
+TCGA-A8-A08C	Epirubicin	Complete Response	TCGA-A8-A08C	Response
+TCGA-A8-A08C	Cyclophosphamide	Complete Response	TCGA-A8-A08C	Response
+TCGA-A8-A08F	Fluorouracil	Complete Response	TCGA-A8-A08F	Response
+TCGA-A8-A08F	Epirubicin	Complete Response	TCGA-A8-A08F	Response
+TCGA-A8-A08F	Cyclophosphamide	Complete Response	TCGA-A8-A08F	Response
+TCGA-A8-A08F	Docetaxel	Complete Response	TCGA-A8-A08F	Response
+TCGA-A8-A08G	Fluorouracil	Complete Response	TCGA-A8-A08G	Response
+TCGA-A8-A08G	Epirubicin	Complete Response	TCGA-A8-A08G	Response
+TCGA-A8-A08G	Cyclophosphamide	Complete Response	TCGA-A8-A08G	Response
+TCGA-A8-A08G	Docetaxel	Complete Response	TCGA-A8-A08G	Response
+TCGA-A8-A08I	Fluorouracil	Complete Response	TCGA-A8-A08I	Response
+TCGA-A8-A08I	Epirubicin	Complete Response	TCGA-A8-A08I	Response
+TCGA-A8-A08I	Cyclophosphamide	Complete Response	TCGA-A8-A08I	Response
+TCGA-A8-A08O	Docetaxel	Progressive Disease	TCGA-A8-A08O	Non-Response
+TCGA-A8-A08O	Vinorelbine	Progressive Disease	TCGA-A8-A08O	Non-Response
+TCGA-A8-A08O	Anastrozole	Progressive Disease	TCGA-A8-A08O	Non-Response
+TCGA-A8-A08O	Bevacizumab	Progressive Disease	TCGA-A8-A08O	Non-Response
+TCGA-A8-A08P	Fluorouracil	Complete Response	TCGA-A8-A08P	Response
+TCGA-A8-A08P	Doxorubicin	Complete Response	TCGA-A8-A08P	Response
+TCGA-A8-A08P	Cyclophosphamide	Complete Response	TCGA-A8-A08P	Response
+TCGA-A8-A08P	Docetaxel	Complete Response	TCGA-A8-A08P	Response
+TCGA-A8-A08P	Trastuzumab	Complete Response	TCGA-A8-A08P	Response
+TCGA-A8-A08X	Doxorubicin	Complete Response	TCGA-A8-A08X	Response
+TCGA-A8-A08X	Cyclophosphamide	Complete Response	TCGA-A8-A08X	Response
+TCGA-A8-A08X	Paclitaxel	Complete Response	TCGA-A8-A08X	Response
+TCGA-A8-A08X	Trastuzumab	Complete Response	TCGA-A8-A08X	Response
+TCGA-A8-A08X	Vinorelbine	Complete Response	TCGA-A8-A08X	Response
+TCGA-A8-A091	Tamoxifen	Stable Disease	TCGA-A8-A091	Non-Response
+TCGA-A8-A091	Pamidronate Disodium	Stable Disease	TCGA-A8-A091	Non-Response
+TCGA-A8-A092	Paclitaxel	Complete Response	TCGA-A8-A092	Response
+TCGA-A8-A092	Epirubicin	Complete Response	TCGA-A8-A092	Response
+TCGA-A8-A092	Cyclophosphamide	Complete Response	TCGA-A8-A092	Response
+TCGA-A8-A095	Fluorouracil	Complete Response	TCGA-A8-A095	Response
+TCGA-A8-A095	Doxorubicin	Complete Response	TCGA-A8-A095	Response
+TCGA-A8-A095	Cyclophosphamide	Complete Response	TCGA-A8-A095	Response
+TCGA-A8-A097	Docetaxel	Complete Response	TCGA-A8-A097	Response
+TCGA-A8-A097	Cyclophosphamide	Complete Response	TCGA-A8-A097	Response
+TCGA-A8-A09D	Doxorubicin	Complete Response	TCGA-A8-A09D	Response
+TCGA-A8-A09D	Cyclophosphamide	Complete Response	TCGA-A8-A09D	Response
+TCGA-A8-A09D	Paclitaxel	Complete Response	TCGA-A8-A09D	Response
+TCGA-A8-A09D	Tamoxifen	Complete Response	TCGA-A8-A09D	Response
+TCGA-A8-A09M	Paclitaxel	Complete Response	TCGA-A8-A09M	Response
+TCGA-A8-A0A4	Tamoxifen	Complete Response	TCGA-A8-A0A4	Response
+TCGA-A8-A0A6	Epirubicin	Complete Response	TCGA-A8-A0A6	Response
+TCGA-A8-A0A6	Cyclophosphamide	Complete Response	TCGA-A8-A0A6	Response
+TCGA-A8-A0A6	Exemestane	Complete Response	TCGA-A8-A0A6	Response
+TCGA-A8-A0AB	Fluorouracil	Complete Response	TCGA-A8-A0AB	Response
+TCGA-A8-A0AB	Doxorubicin	Complete Response	TCGA-A8-A0AB	Response
+TCGA-A8-A0AB	Cyclophosphamide	Complete Response	TCGA-A8-A0AB	Response
+TCGA-AC-A23G	Cyclophosphamide	Complete Response	TCGA-AC-A23G	Response
+TCGA-AC-A23G	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A23G	Response
+TCGA-AC-A23G	Paclitaxel	Complete Response	TCGA-AC-A23G	Response
+TCGA-AC-A23G	Anastrozole	Complete Response	TCGA-AC-A23G	Response
+TCGA-AC-A2BK	Cyclophosphamide	Complete Response	TCGA-AC-A2BK	Response
+TCGA-AC-A2BK	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A2BK	Response
+TCGA-AC-A2BK	Paclitaxel	Complete Response	TCGA-AC-A2BK	Response
+TCGA-AC-A2BK	Bevacizumab	Complete Response	TCGA-AC-A2BK	Response
+TCGA-AC-A2FB	Docetaxel	Complete Response	TCGA-AC-A2FB	Response
+TCGA-AC-A2FB	Trastuzumab	Complete Response	TCGA-AC-A2FB	Response
+TCGA-AC-A2FB	Anastrozole	Complete Response	TCGA-AC-A2FB	Response
+TCGA-AC-A2FE	Doxorubicin Hydrochloride	Partial Response	TCGA-AC-A2FE	Response
+TCGA-AC-A2FE	Paclitaxel	Partial Response	TCGA-AC-A2FE	Response
+TCGA-AC-A2FE	Cyclophosphamide	Complete Response	TCGA-AC-A2FE	Response
+TCGA-AC-A2FE	Capecitabine	Progressive Disease	TCGA-AC-A2FE	Non-Response
+TCGA-AC-A2FE	Nab-paclitaxel	Progressive Disease	TCGA-AC-A2FE	Non-Response
+TCGA-AC-A2FF	Cyclophosphamide	Complete Response	TCGA-AC-A2FF	Response
+TCGA-AC-A2FF	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A2FF	Response
+TCGA-AC-A2FF	Paclitaxel	Complete Response	TCGA-AC-A2FF	Response
+TCGA-AC-A2FF	Tamoxifen	Complete Response	TCGA-AC-A2FF	Response
+TCGA-AC-A2FG	Anastrozole	Complete Response	TCGA-AC-A2FG	Response
+TCGA-AC-A2FK	Cyclophosphamide	Complete Response	TCGA-AC-A2FK	Response
+TCGA-AC-A2FK	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A2FK	Response
+TCGA-AC-A2FK	Letrozole	Complete Response	TCGA-AC-A2FK	Response
+TCGA-AC-A2FK	Docetaxel	Complete Response	TCGA-AC-A2FK	Response
+TCGA-AC-A2FO	Hormone Therapy	Complete Response	TCGA-AC-A2FO	Response
+TCGA-AC-A2QH	Cyclophosphamide	Complete Response	TCGA-AC-A2QH	Response
+TCGA-AC-A2QH	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A2QH	Response
+TCGA-AC-A2QH	Palonosetron Hydrochloride	Complete Response	TCGA-AC-A2QH	Response
+TCGA-AC-A2QI	Cyclophosphamide	Complete Response	TCGA-AC-A2QI	Response
+TCGA-AC-A2QI	Fluorouracil	Complete Response	TCGA-AC-A2QI	Response
+TCGA-AC-A2QI	Methotrexate	Complete Response	TCGA-AC-A2QI	Response
+TCGA-AC-A2QJ	Cyclophosphamide	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A2QJ	Doxorubicin Hydrochloride	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A2QJ	Nab-paclitaxel	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A2QJ	Gemcitabine Hydrochloride	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A2QJ	Carboplatin	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A2QJ	Fulvestrant	Progressive Disease	TCGA-AC-A2QJ	Non-Response
+TCGA-AC-A3BB	Cyclophosphamide	Complete Response	TCGA-AC-A3BB	Response
+TCGA-AC-A3BB	Doxorubicin Hydrochloride	Complete Response	TCGA-AC-A3BB	Response
+TCGA-AC-A3BB	Docetaxel	Complete Response	TCGA-AC-A3BB	Response
+TCGA-AC-A3TM	Cyclophosphamide	Complete Response	TCGA-AC-A3TM	Response
+TCGA-AC-A3TM	Docetaxel	Complete Response	TCGA-AC-A3TM	Response
+TCGA-AC-A3TM	Clinical Trial Agent	Complete Response	TCGA-AC-A3TM	Response
+TCGA-AC-A3W5	Docetaxel	Complete Response	TCGA-AC-A3W5	Response
+TCGA-AC-A3W5	Cyclophosphamide	Complete Response	TCGA-AC-A3W5	Response
+TCGA-AC-A3W5	Trastuzumab	Complete Response	TCGA-AC-A3W5	Response
+TCGA-AC-A3YI	Cyclophosphamide	Complete Response	TCGA-AC-A3YI	Response
+TCGA-AC-A3YI	Methotrexate	Complete Response	TCGA-AC-A3YI	Response
+TCGA-AC-A3YI	Fluorouracil	Complete Response	TCGA-AC-A3YI	Response
+TCGA-AC-A62V	Denosumab	Partial Response	TCGA-AC-A62V	Response
+TCGA-AC-A62V	Paclitaxel	Partial Response	TCGA-AC-A62V	Response
+TCGA-AQ-A04H	Carboplatin	Complete Response	TCGA-AQ-A04H	Response
+TCGA-AQ-A04H	Trastuzumab	Complete Response	TCGA-AQ-A04H	Response
+TCGA-AQ-A54O	Doxorubicin Hydrochloride	Complete Response	TCGA-AQ-A54O	Response
+TCGA-AQ-A54O	Cyclophosphamide	Complete Response	TCGA-AQ-A54O	Response
+TCGA-AQ-A54O	Paclitaxel	Complete Response	TCGA-AQ-A54O	Response
+TCGA-AQ-A7U7	Rituximab	Complete Response	TCGA-AQ-A7U7	Response
+TCGA-AQ-A7U7	Cyclophosphamide	Complete Response	TCGA-AQ-A7U7	Response
+TCGA-AQ-A7U7	Doxorubicin	Complete Response	TCGA-AQ-A7U7	Response
+TCGA-AQ-A7U7	Vincristine	Complete Response	TCGA-AQ-A7U7	Response
+TCGA-AQ-A7U7	Prednisone	Complete Response	TCGA-AQ-A7U7	Response
+TCGA-B6-A402	Cyclophosphamide	Partial Response	TCGA-B6-A402	Response
+TCGA-B6-A402	Doxorubicin	Partial Response	TCGA-B6-A402	Response
+TCGA-B6-A402	Paclitaxel	Partial Response	TCGA-B6-A402	Response
+TCGA-B6-A402	Pegylated Liposomal Doxorubicin Hydrochloride	Partial Response	TCGA-B6-A402	Response
+TCGA-BH-A0AV	Docetaxel	Complete Response	TCGA-BH-A0AV	Response
+TCGA-BH-A0AV	Cyclophosphamide	Complete Response	TCGA-BH-A0AV	Response
+TCGA-BH-A0AZ	Doxorubicin	Complete Response	TCGA-BH-A0AZ	Response
+TCGA-BH-A0AZ	Cyclophosphamide	Complete Response	TCGA-BH-A0AZ	Response
+TCGA-BH-A0AZ	Paclitaxel	Complete Response	TCGA-BH-A0AZ	Response
+TCGA-BH-A0AZ	Bevacizumab	Complete Response	TCGA-BH-A0AZ	Response
+TCGA-BH-A0B0	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0B0	Response
+TCGA-BH-A0B0	Cyclophosphamide	Complete Response	TCGA-BH-A0B0	Response
+TCGA-BH-A0B5	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0B5	Response
+TCGA-BH-A0B5	Cyclophosphamide	Complete Response	TCGA-BH-A0B5	Response
+TCGA-BH-A0B7	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0B7	Response
+TCGA-BH-A0B7	Paclitaxel	Complete Response	TCGA-BH-A0B7	Response
+TCGA-BH-A0BL	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0BL	Response
+TCGA-BH-A0BL	Cyclophosphamide	Complete Response	TCGA-BH-A0BL	Response
+TCGA-BH-A0BL	Paclitaxel	Complete Response	TCGA-BH-A0BL	Response
+TCGA-BH-A0BS	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0BS	Response
+TCGA-BH-A0BS	Cyclophosphamide	Complete Response	TCGA-BH-A0BS	Response
+TCGA-BH-A0BT	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0BT	Response
+TCGA-BH-A0BT	Cyclophosphamide	Complete Response	TCGA-BH-A0BT	Response
+TCGA-BH-A0BW	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0BW	Response
+TCGA-BH-A0BW	Cyclophosphamide	Complete Response	TCGA-BH-A0BW	Response
+TCGA-BH-A0BZ	Doxorubicin	Complete Response	TCGA-BH-A0BZ	Response
+TCGA-BH-A0BZ	Cyclophosphamide	Complete Response	TCGA-BH-A0BZ	Response
+TCGA-BH-A0BZ	Nab-paclitaxel	Complete Response	TCGA-BH-A0BZ	Response
+TCGA-BH-A0C1	Doxorubicin Hydrochloride	Progressive Disease	TCGA-BH-A0C1	Non-Response
+TCGA-BH-A0C1	Cyclophosphamide	Progressive Disease	TCGA-BH-A0C1	Non-Response
+TCGA-BH-A0C3	Doxorubicin Hydrochloride	Progressive Disease	TCGA-BH-A0C3	Non-Response
+TCGA-BH-A0C3	Cyclophosphamide	Progressive Disease	TCGA-BH-A0C3	Non-Response
+TCGA-BH-A0C7	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0C7	Response
+TCGA-BH-A0C7	Cyclophosphamide	Complete Response	TCGA-BH-A0C7	Response
+TCGA-BH-A0C7	Paclitaxel	Complete Response	TCGA-BH-A0C7	Response
+TCGA-BH-A0DD	Docetaxel	Complete Response	TCGA-BH-A0DD	Response
+TCGA-BH-A0DD	Carboplatin	Complete Response	TCGA-BH-A0DD	Response
+TCGA-BH-A0DG	Docetaxel	Complete Response	TCGA-BH-A0DG	Response
+TCGA-BH-A0DG	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0DG	Response
+TCGA-BH-A0DG	Cyclophosphamide	Complete Response	TCGA-BH-A0DG	Response
+TCGA-BH-A0DI	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0DI	Response
+TCGA-BH-A0DI	Cyclophosphamide	Complete Response	TCGA-BH-A0DI	Response
+TCGA-BH-A0DI	Paclitaxel	Complete Response	TCGA-BH-A0DI	Response
+TCGA-BH-A0DL	Cyclophosphamide	Complete Response	TCGA-BH-A0DL	Response
+TCGA-BH-A0DL	Docetaxel	Complete Response	TCGA-BH-A0DL	Response
+TCGA-BH-A0DT	Docetaxel	Complete Response	TCGA-BH-A0DT	Response
+TCGA-BH-A0DT	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0DT	Response
+TCGA-BH-A0DT	Cyclophosphamide	Complete Response	TCGA-BH-A0DT	Response
+TCGA-BH-A0DV	Docetaxel	Complete Response	TCGA-BH-A0DV	Response
+TCGA-BH-A0DV	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0DV	Response
+TCGA-BH-A0DV	Cyclophosphamide	Complete Response	TCGA-BH-A0DV	Response
+TCGA-BH-A0DX	Docetaxel	Complete Response	TCGA-BH-A0DX	Response
+TCGA-BH-A0DX	Cyclophosphamide	Complete Response	TCGA-BH-A0DX	Response
+TCGA-BH-A0DX	Methotrexate	Complete Response	TCGA-BH-A0DX	Response
+TCGA-BH-A0E9	Docetaxel	Complete Response	TCGA-BH-A0E9	Response
+TCGA-BH-A0E9	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A0E9	Response
+TCGA-BH-A0E9	Cyclophosphamide	Complete Response	TCGA-BH-A0E9	Response
+TCGA-BH-A0EA	Docetaxel	Complete Response	TCGA-BH-A0EA	Response
+TCGA-BH-A0EA	Cyclophosphamide	Complete Response	TCGA-BH-A0EA	Response
+TCGA-BH-A0H5	Cyclophosphamide	Complete Response	TCGA-BH-A0H5	Response
+TCGA-BH-A0H5	Docetaxel	Complete Response	TCGA-BH-A0H5	Response
+TCGA-BH-A0HY	Docetaxel	Complete Response	TCGA-BH-A0HY	Response
+TCGA-BH-A0HY	Carboplatin	Complete Response	TCGA-BH-A0HY	Response
+TCGA-BH-A0HY	Trastuzumab	Complete Response	TCGA-BH-A0HY	Response
+TCGA-BH-A0W5	Anastrozole	Complete Response	TCGA-BH-A0W5	Response
+TCGA-BH-A0W7	Docetaxel	Complete Response	TCGA-BH-A0W7	Response
+TCGA-BH-A0W7	Cyclophosphamide	Complete Response	TCGA-BH-A0W7	Response
+TCGA-BH-A0W7	Tamoxifen	Complete Response	TCGA-BH-A0W7	Response
+TCGA-BH-A0W7	Anastrozole	Complete Response	TCGA-BH-A0W7	Response
+TCGA-BH-A18F	Docetaxel	Complete Response	TCGA-BH-A18F	Response
+TCGA-BH-A18F	Cyclophosphamide	Complete Response	TCGA-BH-A18F	Response
+TCGA-BH-A18H	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A18H	Response
+TCGA-BH-A18H	Cyclophosphamide	Complete Response	TCGA-BH-A18H	Response
+TCGA-BH-A18H	Docetaxel	Complete Response	TCGA-BH-A18H	Response
+TCGA-BH-A18I	Docetaxel	Complete Response	TCGA-BH-A18I	Response
+TCGA-BH-A18I	Cyclophosphamide	Complete Response	TCGA-BH-A18I	Response
+TCGA-BH-A202	Carboplatin	Complete Response	TCGA-BH-A202	Response
+TCGA-BH-A202	Docetaxel	Complete Response	TCGA-BH-A202	Response
+TCGA-BH-A28O	Cyclophosphamide	Complete Response	TCGA-BH-A28O	Response
+TCGA-BH-A28O	Doxorubicin	Complete Response	TCGA-BH-A28O	Response
+TCGA-BH-A2L8	Cyclophosphamide	Complete Response	TCGA-BH-A2L8	Response
+TCGA-BH-A5IZ	Doxorubicin Hydrochloride	Complete Response	TCGA-BH-A5IZ	Response
+TCGA-BH-A5IZ	Docetaxel	Complete Response	TCGA-BH-A5IZ	Response
+TCGA-BH-A5IZ	Cyclophosphamide	Complete Response	TCGA-BH-A5IZ	Response
+TCGA-BH-A8G0	Docetaxel	Complete Response	TCGA-BH-A8G0	Response
+TCGA-BH-A8G0	Cyclophosphamide	Complete Response	TCGA-BH-A8G0	Response
+TCGA-C8-A12Z	Fluorouracil	Complete Response	TCGA-C8-A12Z	Response
+TCGA-C8-A12Z	Doxorubicin	Complete Response	TCGA-C8-A12Z	Response
+TCGA-C8-A12Z	Cyclophosphamide	Complete Response	TCGA-C8-A12Z	Response
+TCGA-C8-A131	Fluorouracil	Complete Response	TCGA-C8-A131	Response
+TCGA-C8-A131	Doxorubicin	Complete Response	TCGA-C8-A131	Response
+TCGA-C8-A131	Cyclophosphamide	Complete Response	TCGA-C8-A131	Response
+TCGA-C8-A134	Fluorouracil	Complete Response	TCGA-C8-A134	Response
+TCGA-C8-A134	Epirubicin	Complete Response	TCGA-C8-A134	Response
+TCGA-C8-A134	Cyclophosphamide	Complete Response	TCGA-C8-A134	Response
+TCGA-C8-A135	Fluorouracil	Complete Response	TCGA-C8-A135	Response
+TCGA-C8-A135	Doxorubicin	Complete Response	TCGA-C8-A135	Response
+TCGA-C8-A135	Cyclophosphamide	Complete Response	TCGA-C8-A135	Response
+TCGA-C8-A135	Paclitaxel	Complete Response	TCGA-C8-A135	Response
+TCGA-C8-A1HM	Doxorubicin	Complete Response	TCGA-C8-A1HM	Response
+TCGA-C8-A1HM	Cyclophosphamide	Complete Response	TCGA-C8-A1HM	Response
+TCGA-C8-A1HM	Paclitaxel	Complete Response	TCGA-C8-A1HM	Response
+TCGA-C8-A1HO	Fluorouracil	Complete Response	TCGA-C8-A1HO	Response
+TCGA-C8-A1HO	Epirubicin	Complete Response	TCGA-C8-A1HO	Response
+TCGA-C8-A1HO	Cyclophosphamide	Complete Response	TCGA-C8-A1HO	Response
+TCGA-C8-A26V	Tamoxifen	Complete Response	TCGA-C8-A26V	Response
+TCGA-C8-A26W	Doxorubicin	Complete Response	TCGA-C8-A26W	Response
+TCGA-C8-A26W	Cyclophosphamide	Complete Response	TCGA-C8-A26W	Response
+TCGA-C8-A26X	Fluorouracil	Complete Response	TCGA-C8-A26X	Response
+TCGA-C8-A26X	Cyclophosphamide	Complete Response	TCGA-C8-A26X	Response
+TCGA-C8-A26X	Doxorubicin	Complete Response	TCGA-C8-A26X	Response
+TCGA-C8-A27A	Fluorouracil	Complete Response	TCGA-C8-A27A	Response
+TCGA-C8-A27A	Doxorubicin	Complete Response	TCGA-C8-A27A	Response
+TCGA-C8-A27A	Cyclophosphamide	Complete Response	TCGA-C8-A27A	Response
+TCGA-C8-A27A	Paclitaxel	Complete Response	TCGA-C8-A27A	Response
+TCGA-C8-A27B	Fluorouracil	Complete Response	TCGA-C8-A27B	Response
+TCGA-C8-A27B	Cyclophosphamide	Complete Response	TCGA-C8-A27B	Response
+TCGA-C8-A27B	Doxorubicin	Complete Response	TCGA-C8-A27B	Response
+TCGA-C8-A27B	Paclitaxel	Complete Response	TCGA-C8-A27B	Response
+TCGA-C8-A8HP	Fluorouracil	Complete Response	TCGA-C8-A8HP	Response
+TCGA-C8-A8HP	Epirubicin	Complete Response	TCGA-C8-A8HP	Response
+TCGA-C8-A8HP	Cyclophosphamide	Complete Response	TCGA-C8-A8HP	Response
+TCGA-C8-A8HR	Fluorouracil	Complete Response	TCGA-C8-A8HR	Response
+TCGA-C8-A8HR	Epirubicin	Complete Response	TCGA-C8-A8HR	Response
+TCGA-C8-A8HR	Cyclophosphamide	Complete Response	TCGA-C8-A8HR	Response
+TCGA-C8-A9FZ	Doxorubicin	Complete Response	TCGA-C8-A9FZ	Response
+TCGA-C8-A9FZ	Fluorouracil	Complete Response	TCGA-C8-A9FZ	Response
+TCGA-C8-A9FZ	Cyclophosphamide	Complete Response	TCGA-C8-A9FZ	Response
+TCGA-D8-A3Z6	Cyclophosphamide	Stable Disease	TCGA-D8-A3Z6	Non-Response
+TCGA-D8-A3Z6	Paclitaxel	Stable Disease	TCGA-D8-A3Z6	Non-Response
+TCGA-D8-A3Z6	Doxorubicin	Stable Disease	TCGA-D8-A3Z6	Non-Response
+TCGA-D8-A73W	Tamoxifen	Progressive Disease	TCGA-D8-A73W	Non-Response
+TCGA-E2-A1IE	Letrozole	Progressive Disease	TCGA-E2-A1IE	Non-Response
+TCGA-E2-A1IE	Fulvestrant	Progressive Disease	TCGA-E2-A1IE	Non-Response
+TCGA-E2-A3DX	Trastuzumab	Complete Response	TCGA-E2-A3DX	Response
+TCGA-E2-A572	Paclitaxel	Complete Response	TCGA-E2-A572	Response
+TCGA-E2-A573	Docetaxel	Complete Response	TCGA-E2-A573	Response
+TCGA-E2-A573	Cyclophosphamide	Complete Response	TCGA-E2-A573	Response
+TCGA-E9-A1N3	Fluorouracil	Complete Response	TCGA-E9-A1N3	Response
+TCGA-E9-A1N3	Doxorubicin	Complete Response	TCGA-E9-A1N3	Response
+TCGA-E9-A1N3	Cyclophosphamide	Complete Response	TCGA-E9-A1N3	Response
+TCGA-E9-A1N6	Doxorubicin	Stable Disease	TCGA-E9-A1N6	Non-Response
+TCGA-E9-A1N6	Cyclophosphamide	Stable Disease	TCGA-E9-A1N6	Non-Response
+TCGA-E9-A1N6	Letrozole	Progressive Disease	TCGA-E9-A1N6	Non-Response
+TCGA-E9-A1NC	Doxorubicin	Complete Response	TCGA-E9-A1NC	Response
+TCGA-E9-A1NC	Fluorouracil	Complete Response	TCGA-E9-A1NC	Response
+TCGA-E9-A1NC	Cyclophosphamide	Complete Response	TCGA-E9-A1NC	Response
+TCGA-E9-A1NC	Tamoxifen	Complete Response	TCGA-E9-A1NC	Response
+TCGA-E9-A1NE	Doxorubicin	Complete Response	TCGA-E9-A1NE	Response
+TCGA-E9-A1NE	Cyclophosphamide	Complete Response	TCGA-E9-A1NE	Response
+TCGA-E9-A1NE	Fluorouracil	Complete Response	TCGA-E9-A1NE	Response
+TCGA-E9-A1NG	Tamoxifen	Complete Response	TCGA-E9-A1NG	Response
+TCGA-E9-A1NI	Doxorubicin	Complete Response	TCGA-E9-A1NI	Response
+TCGA-E9-A1NI	Cyclophosphamide	Complete Response	TCGA-E9-A1NI	Response
+TCGA-E9-A1NI	Fluorouracil	Complete Response	TCGA-E9-A1NI	Response
+TCGA-E9-A1R2	Docetaxel	Complete Response	TCGA-E9-A1R2	Response
+TCGA-E9-A1R2	Doxorubicin Hydrochloride	Complete Response	TCGA-E9-A1R2	Response
+TCGA-E9-A1R2	Cyclophosphamide	Complete Response	TCGA-E9-A1R2	Response
+TCGA-E9-A1RI	Leuprolide	Complete Response	TCGA-E9-A1RI	Response
+TCGA-E9-A226	Pamidronate Disodium	Partial Response	TCGA-E9-A226	Response
+TCGA-E9-A227	Docetaxel	Complete Response	TCGA-E9-A227	Response
+TCGA-E9-A243	Pamidronate Disodium	Stable Disease	TCGA-E9-A243	Non-Response
+TCGA-E9-A2JS	Cyclophosphamide	Complete Response	TCGA-E9-A2JS	Response
+TCGA-E9-A2JS	Methotrexate	Complete Response	TCGA-E9-A2JS	Response
+TCGA-E9-A2JS	Fluorouracil	Complete Response	TCGA-E9-A2JS	Response
+TCGA-E9-A2JS	Goserelin Acetate	Progressive Disease	TCGA-E9-A2JS	Non-Response
+TCGA-E9-A3HO	Cyclophosphamide	Complete Response	TCGA-E9-A3HO	Response
+TCGA-E9-A3HO	Fluorouracil	Complete Response	TCGA-E9-A3HO	Response
+TCGA-E9-A3HO	Methotrexate	Complete Response	TCGA-E9-A3HO	Response
+TCGA-E9-A3HO	Leuprolide Acetate	Complete Response	TCGA-E9-A3HO	Response
+TCGA-E9-A3HO	Goserelin Acetate	Complete Response	TCGA-E9-A3HO	Response
+TCGA-E9-A3Q9	Cyclophosphamide	Complete Response	TCGA-E9-A3Q9	Response
+TCGA-E9-A3Q9	Mitoxantrone	Complete Response	TCGA-E9-A3Q9	Response
+TCGA-E9-A3Q9	Fluorouracil	Complete Response	TCGA-E9-A3Q9	Response
+TCGA-E9-A3X8	Cyclophosphamide	Complete Response	TCGA-E9-A3X8	Response
+TCGA-E9-A3X8	Doxorubicin	Complete Response	TCGA-E9-A3X8	Response
+TCGA-E9-A3X8	Fluorouracil	Complete Response	TCGA-E9-A3X8	Response
+TCGA-E9-A5FK	Cyclophosphamide	Complete Response	TCGA-E9-A5FK	Response
+TCGA-E9-A5FK	Methotrexate	Complete Response	TCGA-E9-A5FK	Response
+TCGA-E9-A5FK	Fluorouracil	Complete Response	TCGA-E9-A5FK	Response
+TCGA-E9-A6HE	Doxorubicin Hydrochloride	Complete Response	TCGA-E9-A6HE	Response
+TCGA-E9-A6HE	Cyclophosphamide	Complete Response	TCGA-E9-A6HE	Response
+TCGA-E9-A6HE	Paclitaxel	Complete Response	TCGA-E9-A6HE	Response
+TCGA-EW-A1OY	Paclitaxel	Stable Disease	TCGA-EW-A1OY	Non-Response
+TCGA-EW-A1P3	Tamoxifen	Stable Disease	TCGA-EW-A1P3	Non-Response
+TCGA-EW-A1P3	Paclitaxel	Stable Disease	TCGA-EW-A1P3	Non-Response
+TCGA-EW-A2FR	Paclitaxel	Stable Disease	TCGA-EW-A2FR	Non-Response
+TCGA-EW-A2FS	Goserelin	Stable Disease	TCGA-EW-A2FS	Non-Response
+TCGA-EW-A3U0	Cisplatin	Complete Response	TCGA-EW-A3U0	Response
+TCGA-EW-A3U0	Docetaxel	Complete Response	TCGA-EW-A3U0	Response
+TCGA-EW-A3U0	Doxorubicin	Complete Response	TCGA-EW-A3U0	Response
+TCGA-EW-A3U0	Cyclophosphamide	Complete Response	TCGA-EW-A3U0	Response
+TCGA-EW-A424	Docetaxel	Complete Response	TCGA-EW-A424	Response
+TCGA-EW-A424	Cyclophosphamide	Complete Response	TCGA-EW-A424	Response
+TCGA-GM-A2D9	Anastrozole	Stable Disease	TCGA-GM-A2D9	Non-Response
+TCGA-GM-A2D9	Tamoxifen	Stable Disease	TCGA-GM-A2D9	Non-Response
+TCGA-GM-A2D9	Capecitabine	Progressive Disease	TCGA-GM-A2D9	Non-Response
+TCGA-GM-A2D9	Gemcitabine	Progressive Disease	TCGA-GM-A2D9	Non-Response
+TCGA-GM-A2DA	Tamoxifen	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Exemestane	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Docetaxel	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Letrozole	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Megestrol Acetate	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Capecitabine	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Trabectedin	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Capecitabine	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Exemestane	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Nab-paclitaxel	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Ixabepilone	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Trastuzumab	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Lapatinib	Stable Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Vinorelbine Tartrate	Progressive Disease	TCGA-GM-A2DA	Non-Response
+TCGA-GM-A2DA	Fluorouracil	Complete Response	TCGA-GM-A2DA	Response
+TCGA-GM-A2DA	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A2DA	Response
+TCGA-GM-A2DA	Cyclophosphamide	Complete Response	TCGA-GM-A2DA	Response
+TCGA-GM-A2DA	Methotrexate	Complete Response	TCGA-GM-A2DA	Response
+TCGA-GM-A2DA	Vinblastine	Complete Response	TCGA-GM-A2DA	Response
+TCGA-GM-A2DB	Paclitaxel	Complete Response	TCGA-GM-A2DB	Response
+TCGA-GM-A2DB	Fluorouracil	Complete Response	TCGA-GM-A2DB	Response
+TCGA-GM-A2DB	Epirubicin	Complete Response	TCGA-GM-A2DB	Response
+TCGA-GM-A2DB	Cyclophosphamide	Complete Response	TCGA-GM-A2DB	Response
+TCGA-GM-A2DC	Capecitabine	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Docetaxel	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Clinical Trial Agent	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Epirubicin	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Cyclophosphamide	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Letrozole	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DC	Anastrozole	Complete Response	TCGA-GM-A2DC	Response
+TCGA-GM-A2DD	Fluorouracil	Complete Response	TCGA-GM-A2DD	Response
+TCGA-GM-A2DD	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A2DD	Response
+TCGA-GM-A2DD	Cyclophosphamide	Complete Response	TCGA-GM-A2DD	Response
+TCGA-GM-A2DF	Paclitaxel	Complete Response	TCGA-GM-A2DF	Response
+TCGA-GM-A2DF	Fluorouracil	Complete Response	TCGA-GM-A2DF	Response
+TCGA-GM-A2DF	Epirubicin	Complete Response	TCGA-GM-A2DF	Response
+TCGA-GM-A2DF	Cyclophosphamide	Complete Response	TCGA-GM-A2DF	Response
+TCGA-GM-A2DH	Paclitaxel	Complete Response	TCGA-GM-A2DH	Response
+TCGA-GM-A2DH	Fluorouracil	Complete Response	TCGA-GM-A2DH	Response
+TCGA-GM-A2DH	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A2DH	Response
+TCGA-GM-A2DH	Cyclophosphamide	Complete Response	TCGA-GM-A2DH	Response
+TCGA-GM-A2DI	Docetaxel	Complete Response	TCGA-GM-A2DI	Response
+TCGA-GM-A2DI	Fluorouracil	Complete Response	TCGA-GM-A2DI	Response
+TCGA-GM-A2DI	Epirubicin	Complete Response	TCGA-GM-A2DI	Response
+TCGA-GM-A2DI	Cyclophosphamide	Complete Response	TCGA-GM-A2DI	Response
+TCGA-GM-A2DK	Anastrozole	Complete Response	TCGA-GM-A2DK	Response
+TCGA-GM-A2DL	Tamoxifen	Complete Response	TCGA-GM-A2DL	Response
+TCGA-GM-A2DM	Paclitaxel	Complete Response	TCGA-GM-A2DM	Response
+TCGA-GM-A2DM	Fluorouracil	Complete Response	TCGA-GM-A2DM	Response
+TCGA-GM-A2DM	Epirubicin	Complete Response	TCGA-GM-A2DM	Response
+TCGA-GM-A2DM	Cyclophosphamide	Complete Response	TCGA-GM-A2DM	Response
+TCGA-GM-A2DM	Anastrozole	Complete Response	TCGA-GM-A2DM	Response
+TCGA-GM-A2DN	Paclitaxel	Complete Response	TCGA-GM-A2DN	Response
+TCGA-GM-A2DN	Fluorouracil	Complete Response	TCGA-GM-A2DN	Response
+TCGA-GM-A2DN	Epirubicin	Complete Response	TCGA-GM-A2DN	Response
+TCGA-GM-A2DN	Cyclophosphamide	Complete Response	TCGA-GM-A2DN	Response
+TCGA-GM-A2DN	Anastrozole	Complete Response	TCGA-GM-A2DN	Response
+TCGA-GM-A2DO	Tamoxifen	Complete Response	TCGA-GM-A2DO	Response
+TCGA-GM-A3NW	Anastrozole	Stable Disease	TCGA-GM-A3NW	Non-Response
+TCGA-GM-A3NW	Fluorouracil	Stable Disease	TCGA-GM-A3NW	Non-Response
+TCGA-GM-A3NW	Cyclophosphamide	Stable Disease	TCGA-GM-A3NW	Non-Response
+TCGA-GM-A3NW	Epirubicin	Stable Disease	TCGA-GM-A3NW	Non-Response
+TCGA-GM-A3XG	Paclitaxel	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XG	Fluorouracil	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XG	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XG	Cyclophosphamide	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XG	Tamoxifen	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XG	Anastrozole	Complete Response	TCGA-GM-A3XG	Response
+TCGA-GM-A3XL	Fluorouracil	Complete Response	TCGA-GM-A3XL	Response
+TCGA-GM-A3XL	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A3XL	Response
+TCGA-GM-A3XL	Cyclophosphamide	Complete Response	TCGA-GM-A3XL	Response
+TCGA-GM-A3XL	Paclitaxel	Complete Response	TCGA-GM-A3XL	Response
+TCGA-GM-A3XN	Paclitaxel	Complete Response	TCGA-GM-A3XN	Response
+TCGA-GM-A3XN	Fluorouracil	Complete Response	TCGA-GM-A3XN	Response
+TCGA-GM-A3XN	Doxorubicin Hydrochloride	Complete Response	TCGA-GM-A3XN	Response
+TCGA-GM-A3XN	Cyclophosphamide	Complete Response	TCGA-GM-A3XN	Response
+TCGA-GM-A3XN	Tamoxifen	Complete Response	TCGA-GM-A3XN	Response
+TCGA-GM-A4E0	Capecitabine	Complete Response	TCGA-GM-A4E0	Response
+TCGA-GM-A4E0	Docetaxel	Complete Response	TCGA-GM-A4E0	Response
+TCGA-GM-A4E0	Fluorouracil	Complete Response	TCGA-GM-A4E0	Response
+TCGA-GM-A4E0	Epirubicin	Complete Response	TCGA-GM-A4E0	Response
+TCGA-GM-A4E0	Cyclophosphamide	Complete Response	TCGA-GM-A4E0	Response
+TCGA-GM-A5PV	Docetaxel	Complete Response	TCGA-GM-A5PV	Response
+TCGA-GM-A5PV	Cyclophosphamide	Complete Response	TCGA-GM-A5PV	Response
+TCGA-GM-A5PX	Anastrozole	Complete Response	TCGA-GM-A5PX	Response
+TCGA-GM-A5PX	Exemestane	Complete Response	TCGA-GM-A5PX	Response
+TCGA-LD-A74U	Docetaxel	Stable Disease	TCGA-LD-A74U	Non-Response
+TCGA-LD-A7W5	Docetaxel	Stable Disease	TCGA-LD-A7W5	Non-Response
+TCGA-LL-A440	Cyclophosphamide	Complete Response	TCGA-LL-A440	Response
+TCGA-LL-A440	Docetaxel	Complete Response	TCGA-LL-A440	Response
+TCGA-LL-A441	Docetaxel	Complete Response	TCGA-LL-A441	Response
+TCGA-LL-A441	Cyclophosphamide	Complete Response	TCGA-LL-A441	Response
+TCGA-LL-A50Y	Anastrozole	Complete Response	TCGA-LL-A50Y	Response
+TCGA-LL-A5YO	Docetaxel	Complete Response	TCGA-LL-A5YO	Response
+TCGA-LL-A5YO	Cyclophosphamide	Complete Response	TCGA-LL-A5YO	Response
+TCGA-LL-A73Z	Doxorubicin Hydrochloride	Progressive Disease	TCGA-LL-A73Z	Non-Response
+TCGA-LL-A73Z	Cyclophosphamide	Progressive Disease	TCGA-LL-A73Z	Non-Response
+TCGA-LL-A73Z	Paclitaxel	Progressive Disease	TCGA-LL-A73Z	Non-Response
+TCGA-LL-A73Z	Fulvestrant	Progressive Disease	TCGA-LL-A73Z	Non-Response
+TCGA-LL-A740	Doxorubicin Hydrochloride	Complete Response	TCGA-LL-A740	Response
+TCGA-LL-A740	Cyclophosphamide	Complete Response	TCGA-LL-A740	Response
+TCGA-LL-A740	Paclitaxel	Complete Response	TCGA-LL-A740	Response
+TCGA-LL-A7SZ	Doxorubicin Hydrochloride	Complete Response	TCGA-LL-A7SZ	Response
+TCGA-LL-A7SZ	Cyclophosphamide	Complete Response	TCGA-LL-A7SZ	Response
+TCGA-LL-A7SZ	Paclitaxel	Complete Response	TCGA-LL-A7SZ	Response
+TCGA-LL-A8F5	Nab-paclitaxel	Complete Response	TCGA-LL-A8F5	Response
+TCGA-LL-A9Q3	Trastuzumab	Complete Response	TCGA-LL-A9Q3	Response
+TCGA-MS-A51U	Paclitaxel	Stable Disease	TCGA-MS-A51U	Non-Response
+TCGA-MS-A51U	Doxorubicin Hydrochloride	Stable Disease	TCGA-MS-A51U	Non-Response
+TCGA-MS-A51U	Cyclophosphamide	Stable Disease	TCGA-MS-A51U	Non-Response
+TCGA-OL-A5D7	Cyclophosphamide	Complete Response	TCGA-OL-A5D7	Response
+TCGA-OL-A5D7	Docetaxel	Complete Response	TCGA-OL-A5D7	Response
+TCGA-OL-A5RU	Cyclophosphamide	Complete Response	TCGA-OL-A5RU	Response
+TCGA-OL-A5RU	Docetaxel	Complete Response	TCGA-OL-A5RU	Response
+TCGA-OL-A5RV	Doxorubicin	Complete Response	TCGA-OL-A5RV	Response
+TCGA-OL-A5RV	Cyclophosphamide	Complete Response	TCGA-OL-A5RV	Response
+TCGA-OL-A5RV	Paclitaxel	Complete Response	TCGA-OL-A5RV	Response
+TCGA-OL-A5RW	Doxorubicin Hydrochloride	Complete Response	TCGA-OL-A5RW	Response
+TCGA-OL-A5RW	Cyclophosphamide	Complete Response	TCGA-OL-A5RW	Response
+TCGA-OL-A5RW	Paclitaxel	Complete Response	TCGA-OL-A5RW	Response
+TCGA-OL-A5RZ	Doxorubicin	Complete Response	TCGA-OL-A5RZ	Response
+TCGA-OL-A5RZ	Cyclophosphamide	Complete Response	TCGA-OL-A5RZ	Response
+TCGA-OL-A5S0	Paclitaxel	Complete Response	TCGA-OL-A5S0	Response
+TCGA-OL-A5S0	Trastuzumab	Complete Response	TCGA-OL-A5S0	Response
+TCGA-OL-A66I	Doxorubicin Hydrochloride	Complete Response	TCGA-OL-A66I	Response
+TCGA-OL-A66I	Cyclophosphamide	Complete Response	TCGA-OL-A66I	Response
+TCGA-OL-A66I	Paclitaxel	Complete Response	TCGA-OL-A66I	Response
+TCGA-OL-A66O	Cyclophosphamide	Complete Response	TCGA-OL-A66O	Response
+TCGA-OL-A66O	Docetaxel	Complete Response	TCGA-OL-A66O	Response
+TCGA-OL-A66P	Cyclophosphamide	Complete Response	TCGA-OL-A66P	Response
+TCGA-OL-A66P	Docetaxel	Complete Response	TCGA-OL-A66P	Response
+TCGA-OL-A6VO	Docetaxel	Complete Response	TCGA-OL-A6VO	Response
+TCGA-OL-A6VO	Cyclophosphamide	Complete Response	TCGA-OL-A6VO	Response
+TCGA-PE-A5DE	Docetaxel	Complete Response	TCGA-PE-A5DE	Response
+TCGA-PE-A5DE	Cyclophosphamide	Complete Response	TCGA-PE-A5DE	Response
+TCGA-S3-A6ZF	Docetaxel	Complete Response	TCGA-S3-A6ZF	Response
+TCGA-S3-A6ZF	Trastuzumab	Complete Response	TCGA-S3-A6ZF	Response
+TCGA-S3-A6ZF	Pegfilgrastim	Complete Response	TCGA-S3-A6ZF	Response
+TCGA-S3-A6ZF	Cyclophosphamide	Complete Response	TCGA-S3-A6ZF	Response
+TCGA-S3-A6ZG	Doxorubicin	Complete Response	TCGA-S3-A6ZG	Response
+TCGA-S3-A6ZG	Cyclophosphamide	Complete Response	TCGA-S3-A6ZG	Response
+TCGA-S3-A6ZG	Paclitaxel	Complete Response	TCGA-S3-A6ZG	Response
+TCGA-S3-A6ZG	Pegfilgrastim	Complete Response	TCGA-S3-A6ZG	Response
+TCGA-S3-A6ZH	Doxorubicin Hydrochloride	Complete Response	TCGA-S3-A6ZH	Response
+TCGA-S3-A6ZH	Cyclophosphamide	Complete Response	TCGA-S3-A6ZH	Response
+TCGA-S3-A6ZH	Pegfilgrastim	Complete Response	TCGA-S3-A6ZH	Response
+TCGA-S3-AA0Z	Pegfilgrastim	Complete Response	TCGA-S3-AA0Z	Response
+TCGA-S3-AA0Z	Doxorubicin	Complete Response	TCGA-S3-AA0Z	Response
+TCGA-S3-AA0Z	Cyclophosphamide	Complete Response	TCGA-S3-AA0Z	Response
+TCGA-S3-AA10	Cyclophosphamide	Complete Response	TCGA-S3-AA10	Response
+TCGA-S3-AA10	Docetaxel	Complete Response	TCGA-S3-AA10	Response
+TCGA-S3-AA10	Pegfilgrastim	Complete Response	TCGA-S3-AA10	Response
+TCGA-S3-AA11	Letrozole	Complete Response	TCGA-S3-AA11	Response
+TCGA-S3-AA11	Exemestane	Complete Response	TCGA-S3-AA11	Response
+TCGA-S3-AA14	Doxorubicin Hydrochloride	Complete Response	TCGA-S3-AA14	Response
+TCGA-S3-AA14	Cyclophosphamide	Complete Response	TCGA-S3-AA14	Response
+TCGA-S3-AA14	Pegfilgrastim	Complete Response	TCGA-S3-AA14	Response
+TCGA-S3-AA15	Doxorubicin Hydrochloride	Complete Response	TCGA-S3-AA15	Response
+TCGA-S3-AA15	Cyclophosphamide	Complete Response	TCGA-S3-AA15	Response
+TCGA-S3-AA15	Pegfilgrastim	Complete Response	TCGA-S3-AA15	Response
+TCGA-S3-AA15	Paclitaxel	Complete Response	TCGA-S3-AA15	Response
+TCGA-V7-A7HQ	Letrozole	Complete Response	TCGA-V7-A7HQ	Response
+TCGA-WT-AB41	Anastrozole	Complete Response	TCGA-WT-AB41	Response
+TCGA-WT-AB41	Docetaxel	Complete Response	TCGA-WT-AB41	Response
+TCGA-WT-AB41	Cyclophosphamide	Complete Response	TCGA-WT-AB41	Response
+TCGA-XX-A899	Cyclophosphamide	Complete Response	TCGA-XX-A899	Response
+TCGA-XX-A899	Docetaxel	Complete Response	TCGA-XX-A899	Response
+TCGA-Z7-A8R5	Doxorubicin Hydrochloride	Stable Disease	TCGA-Z7-A8R5	Non-Response
+TCGA-Z7-A8R5	Cyclophosphamide	Stable Disease	TCGA-Z7-A8R5	Non-Response
+TCGA-Z7-A8R5	Paclitaxel	Stable Disease	TCGA-Z7-A8R5	Non-Response
+TCGA-Z7-A8R6	Doxorubicin Hydrochloride	Complete Response	TCGA-Z7-A8R6	Response
+TCGA-Z7-A8R6	Cyclophosphamide	Complete Response	TCGA-Z7-A8R6	Response
+TCGA-Z7-A8R6	Paclitaxel	Complete Response	TCGA-Z7-A8R6	Response
