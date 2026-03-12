@@ -1,0 +1,22 @@
+PATIENT_ID	THERAPEUTIC_AGENT	TREATMENT_OUTCOME	barcode	RESPONSE_GROUP
+TCGA-06-1806	Temozolomide	Stable Disease	TCGA-06-1806	Non-Response
+TCGA-06-1806	Temozolomide	Progressive Disease	TCGA-06-1806	Non-Response
+TCGA-06-1806	Veliparib	Progressive Disease	TCGA-06-1806	Non-Response
+TCGA-06-1806	Cabozantinib	Progressive Disease	TCGA-06-1806	Non-Response
+TCGA-06-A5U0	Temozolomide	Progressive Disease	TCGA-06-A5U0	Non-Response
+TCGA-06-A6S1	Temozolomide	Progressive Disease	TCGA-06-A6S1	Non-Response
+TCGA-06-A7TK	Temozolomide	Stable Disease	TCGA-06-A7TK	Non-Response
+TCGA-06-A7TK	Lomustine	Progressive Disease	TCGA-06-A7TK	Non-Response
+TCGA-06-A7TK	Procarbazine	Progressive Disease	TCGA-06-A7TK	Non-Response
+TCGA-06-A7TL	Temozolomide	Stable Disease	TCGA-06-A7TL	Non-Response
+TCGA-19-5950	Vismodegib	Progressive Disease	TCGA-19-5950	Non-Response
+TCGA-19-5956	Bevacizumab	Stable Disease	TCGA-19-5956	Non-Response
+TCGA-19-5956	Temozolomide	Stable Disease	TCGA-19-5956	Non-Response
+TCGA-19-5959	Temozolomide	Progressive Disease	TCGA-19-5959	Non-Response
+TCGA-19-5959	Bevacizumab	Progressive Disease	TCGA-19-5959	Non-Response
+TCGA-19-5960	Bevacizumab	Stable Disease	TCGA-19-5960	Non-Response
+TCGA-19-5960	Temozolomide	Stable Disease	TCGA-19-5960	Non-Response
+TCGA-19-A60I	Temozolomide	Stable Disease	TCGA-19-A60I	Non-Response
+TCGA-19-A6J5	Temozolomide	Stable Disease	TCGA-19-A6J5	Non-Response
+TCGA-4W-AA9S	Temozolomide	Complete Response	TCGA-4W-AA9S	Response
+TCGA-87-5896	Temozolomide	Complete Response	TCGA-87-5896	Response
