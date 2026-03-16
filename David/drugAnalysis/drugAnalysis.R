@@ -14,8 +14,8 @@ summarise <- dplyr::summarise
 # configurations
 
 # you need to download clinical treatment and gene expression data. i got both from cBioPortal -> TCGA
-TREATMENT_FILE        <- "/Users/kayannaya/Documents/Work/TEEP/David/data/dataGBM/gbm_tcga_gdc/data_timeline_treatment.txt"
-EXPRESSION_FILE       <- "/Users/kayannaya/Documents/Work/TEEP/David/data/dataGBM/gbm_tcga_gdc/data_mrna_seq_read_counts.txt"
+TREATMENT_FILE        <- "/Users/kayannaya/Documents/Work/TEEP/David/data/dataPancreas/paad_tcga_gdc/data_timeline_treatment.txt"
+EXPRESSION_FILE       <- "/Users/kayannaya/Documents/Work/TEEP/David/data/dataPancreas/paad_tcga_gdc/data_mrna_seq_read_counts.txt"
 GENES_OF_INTEREST     <- c("TEX36-AS1")
 MIN_SAMPLES_PER_GROUP <- 3
 OUTPUT_DIR            <- "/Users/kayannaya/Documents/Work/TEEP/David/drugAnalysis/output"
@@ -108,6 +108,7 @@ expr_long <- expr_raw[expr_raw$Entrez_Gene_Id %in% target_entrez, ] %>%
 
 cat("Expression rows for genes of interest:", nrow(expr_long), "\n")
 
+# save the file
 write_tsv(expr_long,
           file.path(OUTPUT_DIR, "expression_response.txt"))
 
