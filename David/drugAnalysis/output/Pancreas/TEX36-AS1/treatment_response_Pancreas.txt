@@ -1,0 +1,136 @@
+PATIENT_ID	THERAPEUTIC_AGENT	TREATMENT_OUTCOME	barcode	RESPONSE_GROUP
+TCGA-2L-AAQA	Gemcitabine	Progressive Disease	TCGA-2L-AAQA	Non-Response
+TCGA-2L-AAQI	Gemcitabine	Progressive Disease	TCGA-2L-AAQI	Non-Response
+TCGA-2L-AAQJ	Gemcitabine	Progressive Disease	TCGA-2L-AAQJ	Non-Response
+TCGA-3A-A9I5	Gemcitabine	Complete Response	TCGA-3A-A9I5	Response
+TCGA-3A-A9I5	Fluorouracil	Complete Response	TCGA-3A-A9I5	Response
+TCGA-3A-A9I9	Oxaliplatin	Stable Disease	TCGA-3A-A9I9	Non-Response
+TCGA-3A-A9I9	Fluorouracil	Stable Disease	TCGA-3A-A9I9	Non-Response
+TCGA-3A-A9I9	Gemcitabine	Stable Disease	TCGA-3A-A9I9	Non-Response
+TCGA-3A-A9I9	Fluorouracil	Progressive Disease	TCGA-3A-A9I9	Non-Response
+TCGA-3A-A9I9	Oxaliplatin	Progressive Disease	TCGA-3A-A9I9	Non-Response
+TCGA-3A-A9IC	Gemcitabine	Stable Disease	TCGA-3A-A9IC	Non-Response
+TCGA-3A-A9IC	Fluorouracil	Stable Disease	TCGA-3A-A9IC	Non-Response
+TCGA-3A-A9IC	Gemcitabine	Progressive Disease	TCGA-3A-A9IC	Non-Response
+TCGA-3A-A9IH	Gemcitabine	Stable Disease	TCGA-3A-A9IH	Non-Response
+TCGA-3A-A9IH	Oxaliplatin	Stable Disease	TCGA-3A-A9IH	Non-Response
+TCGA-3A-A9IX	Fluorouracil	Complete Response	TCGA-3A-A9IX	Response
+TCGA-3A-A9IX	Gemcitabine	Complete Response	TCGA-3A-A9IX	Response
+TCGA-3A-A9IZ	Gemcitabine	Progressive Disease	TCGA-3A-A9IZ	Non-Response
+TCGA-3A-A9J0	Gemcitabine	Progressive Disease	TCGA-3A-A9J0	Non-Response
+TCGA-3E-AAAZ	Docetaxel	Partial Response	TCGA-3E-AAAZ	Response
+TCGA-3E-AAAZ	Gemcitabine	Partial Response	TCGA-3E-AAAZ	Response
+TCGA-F2-6879	Gemcitabine	Partial Response	TCGA-F2-6879	Response
+TCGA-F2-6880	Gemcitabine	Complete Response	TCGA-F2-6880	Response
+TCGA-F2-7273	Capecitabine	Progressive Disease	TCGA-F2-7273	Non-Response
+TCGA-F2-7273	Gemcitabine	Stable Disease	TCGA-F2-7273	Non-Response
+TCGA-F2-7276	Gemcitabine	Progressive Disease	TCGA-F2-7276	Non-Response
+TCGA-F2-A44G	Gemcitabine Hydrochloride	Complete Response	TCGA-F2-A44G	Response
+TCGA-F2-A44G	Capecitabine	Complete Response	TCGA-F2-A44G	Response
+TCGA-F2-A44H	Gemcitabine Hydrochloride	Complete Response	TCGA-F2-A44H	Response
+TCGA-F2-A44H	Capecitabine	Complete Response	TCGA-F2-A44H	Response
+TCGA-F2-A8YN	Gemcitabine Hydrochloride	Progressive Disease	TCGA-F2-A8YN	Non-Response
+TCGA-FB-A4P6	Irinotecan	Complete Response	TCGA-FB-A4P6	Response
+TCGA-FB-A4P6	Fluorouracil	Complete Response	TCGA-FB-A4P6	Response
+TCGA-FB-A4P6	Oxaliplatin	Complete Response	TCGA-FB-A4P6	Response
+TCGA-FB-A545	Fluorouracil	Complete Response	TCGA-FB-A545	Response
+TCGA-FB-A545	Gemcitabine	Complete Response	TCGA-FB-A545	Response
+TCGA-FB-A545	Fluorouracil	Progressive Disease	TCGA-FB-A545	Non-Response
+TCGA-FB-A545	Leucovorin	Progressive Disease	TCGA-FB-A545	Non-Response
+TCGA-FB-A545	Oxaliplatin	Progressive Disease	TCGA-FB-A545	Non-Response
+TCGA-FB-A5VM	Gemcitabine	Progressive Disease	TCGA-FB-A5VM	Non-Response
+TCGA-FB-A78T	Gemcitabine	Complete Response	TCGA-FB-A78T	Response
+TCGA-FB-AAPP	Gemcitabine Hydrochloride	Progressive Disease	TCGA-FB-AAPP	Non-Response
+TCGA-FB-AAPP	Capecitabine	Progressive Disease	TCGA-FB-AAPP	Non-Response
+TCGA-FB-AAPY	Gemcitabine Hydrochloride	Complete Response	TCGA-FB-AAPY	Response
+TCGA-FB-AAQ6	Gemcitabine	Complete Response	TCGA-FB-AAQ6	Response
+TCGA-FZ-5919	Gemcitabine	Progressive Disease	TCGA-FZ-5919	Non-Response
+TCGA-FZ-5922	Gemcitabine Hydrochloride	Progressive Disease	TCGA-FZ-5922	Non-Response
+TCGA-FZ-5922	Erlotinib Hydrochloride	Progressive Disease	TCGA-FZ-5922	Non-Response
+TCGA-FZ-5923	Gemcitabine Hydrochloride	Progressive Disease	TCGA-FZ-5923	Non-Response
+TCGA-FZ-5924	Gemcitabine Hydrochloride	Progressive Disease	TCGA-FZ-5924	Non-Response
+TCGA-H6-8124	Capecitabine	Complete Response	TCGA-H6-8124	Response
+TCGA-H8-A6C1	Gemcitabine	Complete Response	TCGA-H8-A6C1	Response
+TCGA-HV-A7OP	Fluorouracil	Progressive Disease	TCGA-HV-A7OP	Non-Response
+TCGA-HV-AA8V	Cisplatin	Progressive Disease	TCGA-HV-AA8V	Non-Response
+TCGA-HV-AA8V	Gemcitabine	Progressive Disease	TCGA-HV-AA8V	Non-Response
+TCGA-HV-AA8V	Fluorouracil	Progressive Disease	TCGA-HV-AA8V	Non-Response
+TCGA-HV-AA8X	Gemcitabine	Progressive Disease	TCGA-HV-AA8X	Non-Response
+TCGA-HZ-7918	Leucovorin	Stable Disease	TCGA-HZ-7918	Non-Response
+TCGA-HZ-7918	Gemcitabine	Complete Response	TCGA-HZ-7918	Response
+TCGA-HZ-7918	Oxaliplatin	Stable Disease	TCGA-HZ-7918	Non-Response
+TCGA-HZ-7918	Irinotecan	Stable Disease	TCGA-HZ-7918	Non-Response
+TCGA-HZ-7918	Fluorouracil	Stable Disease	TCGA-HZ-7918	Non-Response
+TCGA-HZ-7920	Fluorouracil	Complete Response	TCGA-HZ-7920	Response
+TCGA-HZ-7923	Gemcitabine	Complete Response	TCGA-HZ-7923	Response
+TCGA-HZ-7924	Gemcitabine	Complete Response	TCGA-HZ-7924	Response
+TCGA-HZ-8001	Capecitabine	Complete Response	TCGA-HZ-8001	Response
+TCGA-HZ-8001	Gemcitabine	Complete Response	TCGA-HZ-8001	Response
+TCGA-HZ-8317	Gemcitabine	Progressive Disease	TCGA-HZ-8317	Non-Response
+TCGA-HZ-8637	Gemcitabine	Complete Response	TCGA-HZ-8637	Response
+TCGA-HZ-A49G	Gemcitabine	Progressive Disease	TCGA-HZ-A49G	Non-Response
+TCGA-HZ-A49H	Gemcitabine	Complete Response	TCGA-HZ-A49H	Response
+TCGA-HZ-A49I	Fluorouracil	Progressive Disease	TCGA-HZ-A49I	Non-Response
+TCGA-HZ-A77O	Gemcitabine	Progressive Disease	TCGA-HZ-A77O	Non-Response
+TCGA-HZ-A77P	Gemcitabine	Complete Response	TCGA-HZ-A77P	Response
+TCGA-HZ-A9TJ	Gemcitabine	Progressive Disease	TCGA-HZ-A9TJ	Non-Response
+TCGA-IB-7644	Gemcitabine	Progressive Disease	TCGA-IB-7644	Non-Response
+TCGA-IB-7645	Fluorouracil	Complete Response	TCGA-IB-7645	Response
+TCGA-IB-7645	Gemcitabine	Stable Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7645	Oxaliplatin	Progressive Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7645	Leucovorin	Complete Response	TCGA-IB-7645	Response
+TCGA-IB-7645	Fluorouracil	Progressive Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7645	Leucovorin	Progressive Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7645	Carboplatin	Progressive Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7645	Gemcitabine Hydrochloride	Progressive Disease	TCGA-IB-7645	Non-Response
+TCGA-IB-7647	Gemcitabine	Progressive Disease	TCGA-IB-7647	Non-Response
+TCGA-IB-7651	Gemcitabine	Progressive Disease	TCGA-IB-7651	Non-Response
+TCGA-IB-7651	Oxaliplatin	Progressive Disease	TCGA-IB-7651	Non-Response
+TCGA-IB-7651	Leucovorin	Progressive Disease	TCGA-IB-7651	Non-Response
+TCGA-IB-7651	Fluorouracil	Progressive Disease	TCGA-IB-7651	Non-Response
+TCGA-IB-7652	Gemcitabine	Complete Response	TCGA-IB-7652	Response
+TCGA-IB-7885	Gemcitabine	Complete Response	TCGA-IB-7885	Response
+TCGA-IB-7888	Fluorouracil	Stable Disease	TCGA-IB-7888	Non-Response
+TCGA-IB-7888	Gemcitabine	Progressive Disease	TCGA-IB-7888	Non-Response
+TCGA-IB-7888	Gemcitabine	Stable Disease	TCGA-IB-7888	Non-Response
+TCGA-IB-7889	Gemcitabine	Progressive Disease	TCGA-IB-7889	Non-Response
+TCGA-IB-7891	Fluorouracil	Complete Response	TCGA-IB-7891	Response
+TCGA-IB-7891	Fluorouracil	Stable Disease	TCGA-IB-7891	Non-Response
+TCGA-IB-7891	Leucovorin Calcium	Stable Disease	TCGA-IB-7891	Non-Response
+TCGA-IB-7891	Irinotecan Hydrochloride	Stable Disease	TCGA-IB-7891	Non-Response
+TCGA-IB-7891	Oxaliplatin	Stable Disease	TCGA-IB-7891	Non-Response
+TCGA-IB-7891	Gemcitabine	Stable Disease	TCGA-IB-7891	Non-Response
+TCGA-IB-8126	Gemcitabine	Progressive Disease	TCGA-IB-8126	Non-Response
+TCGA-IB-8127	Gemcitabine	Complete Response	TCGA-IB-8127	Response
+TCGA-IB-A5SO	Gemcitabine	Progressive Disease	TCGA-IB-A5SO	Non-Response
+TCGA-IB-A5SP	Gemcitabine	Progressive Disease	TCGA-IB-A5SP	Non-Response
+TCGA-IB-A5SS	Gemcitabine	Partial Response	TCGA-IB-A5SS	Response
+TCGA-IB-A6UF	Gemcitabine	Complete Response	TCGA-IB-A6UF	Response
+TCGA-IB-A7LX	Fluorouracil	Progressive Disease	TCGA-IB-A7LX	Non-Response
+TCGA-IB-A7LX	Leucovorin Calcium	Progressive Disease	TCGA-IB-A7LX	Non-Response
+TCGA-IB-A7LX	Irinotecan Hydrochloride	Progressive Disease	TCGA-IB-A7LX	Non-Response
+TCGA-IB-A7LX	Oxaliplatin	Progressive Disease	TCGA-IB-A7LX	Non-Response
+TCGA-IB-A7LX	Gemcitabine	Progressive Disease	TCGA-IB-A7LX	Non-Response
+TCGA-IB-AAUO	Gemcitabine	Progressive Disease	TCGA-IB-AAUO	Non-Response
+TCGA-IB-AAUQ	Fluorouracil	Progressive Disease	TCGA-IB-AAUQ	Non-Response
+TCGA-IB-AAUQ	Irinotecan	Progressive Disease	TCGA-IB-AAUQ	Non-Response
+TCGA-IB-AAUQ	Oxaliplatin	Progressive Disease	TCGA-IB-AAUQ	Non-Response
+TCGA-L1-A7W4	Gemcitabine	Progressive Disease	TCGA-L1-A7W4	Non-Response
+TCGA-LB-A8F3	Gemcitabine Hydrochloride	Complete Response	TCGA-LB-A8F3	Response
+TCGA-LB-A9Q5	Gemcitabine Hydrochloride	Progressive Disease	TCGA-LB-A9Q5	Non-Response
+TCGA-LB-A9Q5	Nab-paclitaxel	Progressive Disease	TCGA-LB-A9Q5	Non-Response
+TCGA-OE-A75W	Fluorouracil	Progressive Disease	TCGA-OE-A75W	Non-Response
+TCGA-Q3-A5QY	Gemcitabine	Partial Response	TCGA-Q3-A5QY	Response
+TCGA-RB-AA9M	Gemcitabine	Progressive Disease	TCGA-RB-AA9M	Non-Response
+TCGA-S4-A8RM	Gemcitabine Hydrochloride	Complete Response	TCGA-S4-A8RM	Response
+TCGA-US-A774	Gemcitabine	Progressive Disease	TCGA-US-A774	Non-Response
+TCGA-XD-AAUG	Gemcitabine	Progressive Disease	TCGA-XD-AAUG	Non-Response
+TCGA-XD-AAUG	Nab-paclitaxel	Progressive Disease	TCGA-XD-AAUG	Non-Response
+TCGA-XD-AAUI	Gemcitabine	Progressive Disease	TCGA-XD-AAUI	Non-Response
+TCGA-YB-A89D	Gemcitabine	Complete Response	TCGA-YB-A89D	Response
+TCGA-YY-A8LH	Gemcitabine	Complete Response	TCGA-YY-A8LH	Response
+TCGA-YY-A8LH	Gemcitabine	Partial Response	TCGA-YY-A8LH	Response
+TCGA-YY-A8LH	Capecitabine	Complete Response	TCGA-YY-A8LH	Response
+TCGA-Z5-AAPL	Cyclophosphamide	Complete Response	TCGA-Z5-AAPL	Response
+TCGA-Z5-AAPL	Doxorubicin	Complete Response	TCGA-Z5-AAPL	Response
+TCGA-Z5-AAPL	Fluorouracil	Complete Response	TCGA-Z5-AAPL	Response
