@@ -1,0 +1,589 @@
+# Immune Infiltration Analysis
+# Modified from Google Colab (immuneinfiltration_v2)
+
+# path configuration
+
+# root folder
+LOCAL_WD <- "/Users/kayannaya/Documents/Work/TEEP/imInfiltration2/BRCA"
+DATASET_PATH <- "/Users/kayannaya/Documents/Work/TEEP/imInfiltration2/dataset"
+
+# output csv directory
+OUTPUT_DIR <- file.path(LOCAL_WD, "/outputs")
+
+# path to cnv file
+CNV_FILE <- file.path(DATASET_PATH, "TCGA.BRCA.sampleMap_Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes.gz")
+
+# path to survival file
+SURVIVAL_FILE <- file.path(DATASET_PATH, "/01_cox/BRCA.csv")
+
+# path to GSVA file
+GENESETS_FILE <- file.path(DATASET_PATH, "geneSets.csv")
+
+# path to BRCA exp file
+BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/data_mrna_seq_read_counts_zscores_ref_all_samples.txt")
+
+# path to BRCA exp file
+TCGA_FILE <- file.path(LOCAL_WD, "/TCGA_BRCA_se.rds")
+
+# local directories
+
+dir.create(LOCAL_WD,    showWarnings = FALSE, recursive = TRUE)
+dir.create(OUTPUT_DIR,  showWarnings = FALSE, recursive = TRUE)
+dir.create(file.path(LOCAL_WD, "GDCdata"), showWarnings = FALSE, recursive = TRUE)
+
+setwd(LOCAL_WD)
+cat("Working directory:", getwd(), "\n")
+
+# save to local output folder (replaces save_and_upload)
+
+save_local <- function(df, filename) {
+  out_path <- file.path(OUTPUT_DIR, filename)
+  write.csv(df, out_path)
+  cat("Saved:", out_path, "\n")
+}
+
+# install the required packages
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+bioc_pkgs <- c("TCGAbiolinks", "SummarizedExperiment", "SingleCellExperiment",
+               "DESeq2", "limma", "GSVA", "clusterProfiler", "org.Hs.eg.db",
+               "survminer")
+
+cran_pkgs <- c("tidyverse", "survival", "dplyr", "purrr", "readxl", "sva", "remotes")
+
+for (pkg in bioc_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) BiocManager::install(pkg, ask = FALSE)
+}
+for (pkg in cran_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) install.packages(pkg)
+}
+
+if (!requireNamespace("immunedeconv", quietly = TRUE)) {
+  remotes::install_github("omnideconv/immunedeconv", upgrade = "never")
+}
+
+# load the library
+
+library(dplyr)
+library(tidyverse)
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+library(SingleCellExperiment)
+library(DESeq2)
+library(limma)
+library(GSVA)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(survival)
+library(survminer)
+library(purrr)
+library(readxl)
+library(immunedeconv)
+
+# 1. download the TCGA data using GDC API
+
+# delete the incomplete tar.gz chunks
+
+# check if the TCGA_FILE is present or not
+if (!file.exists(TCGA_FILE)) {
+  # file not found → download from GDC
+  file.remove(list.files(pattern = "*.tar.gz", full.names = TRUE))
+  
+  options(TCGA_downloaded_data = file.path(LOCAL_WD, "GDCdata"))
+  
+  query_expr <- GDCquery(project       = "TCGA-BRCA",
+                         data.category = "Transcriptome Profiling",
+                         data.type     = "Gene Expression Quantification",
+                         workflow.type = "STAR - Counts")
+  
+  GDCdownload(query_expr, method = "api", files.per.chunk = 10)
+  
+  se <- GDCprepare(query_expr)
+  
+  saveRDS(se, file = TCGA_FILE)
+  cat("SE object saved locally.\n")
+  
+} else {
+  # immediately access the downloaded data from the previous session
+  se <- readRDS(TCGA_FILE)
+  cat("SE object loaded from:", TCGA_FILE, "\n")
+}
+
+rowdata      <- rowData(se)
+se_mrna      <- se[rowdata$gene_type == "protein_coding", ]
+symbol_mrna  <- rowData(se_mrna)$gene_name
+
+expr_tpm_mrna    <- assay(se_mrna, "tpm_unstrand")
+expr_counts_mrna <- assay(se_mrna, "unstranded")
+
+cat("SE object dimensions:", dim(se_mrna), "\n")
+
+# 2. data pre-processing 
+
+expr_tpm_mrna_symbol <- cbind(data.frame(symbol_mrna), as.data.frame(expr_tpm_mrna))
+
+BRCA_tpm <- expr_tpm_mrna_symbol %>%
+  as_tibble() %>%
+  mutate(meanrow = rowMeans(.[, -1]), .before = 2) %>%
+  filter(meanrow >= 1) %>%
+  arrange(desc(meanrow)) %>%
+  dplyr::distinct(symbol_mrna, .keep_all = TRUE) %>%
+  dplyr::select(-meanrow) %>%
+  column_to_rownames(var = "symbol_mrna") %>%
+  as.data.frame()
+
+colnames(BRCA_tpm) <- substr(colnames(BRCA_tpm), 1, 15)
+BRCA_tpm           <- BRCA_tpm[, !duplicated(colnames(BRCA_tpm))]
+
+selected_cols  <- colnames(BRCA_tpm)[substr(colnames(BRCA_tpm), 14, 15) == "01"]
+clean_BRCA_tpm <- BRCA_tpm[, selected_cols]
+
+cat("clean_BRCA_tpm dimensions:", dim(clean_BRCA_tpm), "\n")
+cat("Sample type codes:\n")
+print(table(substr(colnames(clean_BRCA_tpm), 14, 15)))
+
+# 3. batch effect removal
+
+meta <- data.frame(
+  barcode     = colnames(se),
+  sample_type = se$sample_type,
+  stringsAsFactors = FALSE
+)
+rownames(meta) <- meta$barcode
+meta$batch     <- substr(meta$barcode, 22, 25)
+
+dat        <- assay(se_mrna, "tpm_unstrand")
+dat_log2   <- log2(dat + 1)
+expr_limma <- removeBatchEffect(dat_log2, batch = meta[colnames(dat_log2), "batch"])
+expr_limma <- as.matrix(2^expr_limma - 1)
+rownames(expr_limma) <- symbol_mrna
+
+expr_limma_df       <- as.data.frame(expr_limma)
+expr_limma_df$genes <- rownames(expr_limma_df)
+
+expr_limma_sym <- expr_limma_df %>%
+  group_by(genes) %>%
+  summarise_all(mean) %>%
+  as.data.frame()
+
+rownames(expr_limma_sym) <- expr_limma_sym$genes
+expr_limma_sym           <- expr_limma_sym[, colnames(expr_limma_sym) != "genes"]
+expr_limma_sym           <- na.omit(expr_limma_sym)
+
+matrix_in_cols <- colnames(expr_limma_sym)[substr(colnames(expr_limma_sym), 14, 15) == "01"]
+matrix_in      <- expr_limma_sym[, matrix_in_cols]
+
+cat("Batch-corrected matrix dimensions:", dim(matrix_in), "\n")
+
+# 4. TME deconvolution
+
+TME <- function(expr, method) {
+  imm           <- immunedeconv::deconvolute(gene_expression = expr, method)
+  imm           <- t(imm)
+  colnames(imm) <- imm[1, ]
+  imm           <- imm[-1, ]
+  imm           <- as.data.frame(imm)
+  samples       <- rownames(imm)
+  imm           <- sapply(imm, as.numeric)
+  rownames(imm) <- samples
+  return(imm)
+}
+
+frac_norm <- function(x) {
+  x / rowSums(x, na.rm = TRUE)
+}
+
+cat("Running deconvolution... this will take a while.\n")
+
+deconvoluted <- list()
+for (method in c("quantiseq", "mcp_counter", "abis", "epic", "estimate")) {
+  cat("  Running:", method, "\n")
+  tryCatch({
+    deconvoluted[[method]] <- TME(matrix_in, method)
+    cat("  Done:", method, "\n")
+  }, error = function(e) cat("  Error in", method, ":", e$message, "\n"))
+}
+
+deconvoluted[["quantiseq_norm"]] <- frac_norm(deconvoluted[["quantiseq"]])
+deconvoluted[["epic_norm"]]      <- frac_norm(deconvoluted[["epic"]])
+deconvoluted[["quantiseq"]]      <- NULL
+deconvoluted[["epic"]]           <- NULL
+
+cat("\nABIS cell type columns:\n")
+print(colnames(deconvoluted[["abis"]]))
+
+for (method_name in names(deconvoluted)) {
+  save_local(deconvoluted[[method_name]],
+             paste0("BRCA_TIL_", method_name, ".csv"))
+}
+
+# 5. load CNV data from local directory
+
+# NOTE: Download this file from UCSC Xena and place it at CNV_FILE (set above)
+# https://tcga.xenahubs.net/download/TCGA.BRCA.sampleMap/Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes.gz
+
+BRCA_cnv              <- read.delim(CNV_FILE, header = TRUE, check.names = FALSE)
+rownames(BRCA_cnv)    <- BRCA_cnv$`Gene Symbol`
+BRCA_cnv$`Gene Symbol` <- NULL
+BRCA_cnv              <- BRCA_cnv[, !duplicated(colnames(BRCA_cnv))]
+
+selected_cols  <- colnames(BRCA_cnv)[substr(colnames(BRCA_cnv), 14, 15) == "01"]
+clean_BRCA_cnv <- BRCA_cnv[, selected_cols]
+
+cat("clean_BRCA_cnv dimensions:", dim(clean_BRCA_cnv), "\n")
+
+# 6. cnv + expression grouping
+
+common_cols <- intersect(colnames(clean_BRCA_tpm), colnames(clean_BRCA_cnv))
+common_rows <- intersect(rownames(clean_BRCA_tpm), rownames(clean_BRCA_cnv))
+
+clean_BRCA_tpm_common <- clean_BRCA_tpm[common_rows, common_cols]
+clean_BRCA_cnv_common <- clean_BRCA_cnv[common_rows, common_cols]
+
+cnv_data    <- clean_BRCA_cnv_common
+expr_data   <- clean_BRCA_tpm_common
+cnv_results <- list()
+
+cat("Grouping", nrow(cnv_data), "genes by CNV and expression...\n")
+
+for (gene in rownames(cnv_data)) {
+  samples_neg_cnv <- which(cnv_data[gene, ] %in% c(-2, -1, 0))
+  samples_pos_cnv <- which(cnv_data[gene, ] %in% c(1, 2))
+  
+  expr_values    <- expr_data[gene, ]
+  ranked_samples <- rank(expr_values, na.last = "keep", ties.method = "average")
+  
+  n_samples           <- length(ranked_samples)
+  bottom_30_threshold <- 0.3 * n_samples
+  top_30_threshold    <- 0.7 * n_samples
+  
+  samples_neg_and_bottom_30 <- names(ranked_samples[samples_neg_cnv][ranked_samples[samples_neg_cnv] <= bottom_30_threshold])
+  samples_pos_and_top_30    <- names(ranked_samples[samples_pos_cnv][ranked_samples[samples_pos_cnv] > top_30_threshold])
+  
+  cnv_results[[gene]] <- list(neg_cnv_bottom_30 = samples_neg_and_bottom_30,
+                              pos_cnv_top_30    = samples_pos_and_top_30)
+}
+
+filtered_cnv_results   <- keep(cnv_results, ~ length(.$neg_cnv_bottom_30) >= 30 & length(.$pos_cnv_top_30) >= 30)
+final_BRCA_cnv_results <- discard(filtered_cnv_results, ~ any(is.na(unlist(.x))))
+
+cat("Genes passing CNV filter:", length(final_BRCA_cnv_results), "\n")
+
+# 7. correlation with TIL abundance (ABIS / CD8+)
+
+BRCA_TIL_abis           <- deconvoluted[["abis"]]
+rownames(BRCA_TIL_abis) <- substr(rownames(BRCA_TIL_abis), 1, 15)
+
+cd8_col_names <- grep("CD8", colnames(BRCA_TIL_abis), ignore.case = TRUE, value = TRUE)
+cat("CD8-related ABIS columns:\n")
+print(cd8_col_names)
+
+# merge TIL and tpm data
+clean_BRCA_tpm_filtered   <- subset(clean_BRCA_tpm,
+                                    rownames(clean_BRCA_tpm) %in% names(final_BRCA_cnv_results))
+clean_BRCA_tpm_filtered_t <- as.data.frame(t(clean_BRCA_tpm_filtered))
+
+rownames(clean_BRCA_tpm_filtered_t) <- trimws(rownames(clean_BRCA_tpm_filtered_t))
+rownames(BRCA_TIL_abis)             <- trimws(rownames(BRCA_TIL_abis))
+                                              
+# confirm TIL columns are numeric
+cat("TIL col class:", class(BRCA_tpm_TIL[, "T cell CD8+ memory"]), "\n")
+cat("TIL col NAs:", sum(is.na(BRCA_tpm_TIL[, "T cell CD8+ memory"])), "\n")
+cat("BRCA_tpm_TIL dims:", dim(BRCA_tpm_TIL), "\n")                                   
+
+# overlapping barcodes check
+sum(rownames(clean_BRCA_tpm_filtered_t) %in% rownames(BRCA_TIL_abis))
+
+# check for hidden characters
+nchar(rownames(clean_BRCA_tpm_filtered_t)[1])
+nchar(rownames(BRCA_TIL_abis)[1])
+
+
+# merge
+BRCA_tpm_TIL <- merge(clean_BRCA_tpm_filtered_t, BRCA_TIL_abis,
+                      by = "row.names", all = FALSE)
+
+rownames(BRCA_tpm_TIL) <- BRCA_tpm_TIL$Row.names
+BRCA_tpm_TIL$Row.names <- NULL
+
+gene_col_idx <- 1:ncol(clean_BRCA_tpm_filtered_t)
+
+til_vec <- as.numeric(BRCA_tpm_TIL[, primary_cd8_col])
+
+# check dimensions before and after merge
+cat("clean_BRCA_tpm_filtered_t rows:", nrow(clean_BRCA_tpm_filtered_t), "\n")
+cat("BRCA_TIL_abis rows:", nrow(BRCA_TIL_abis), "\n")
+cat("BRCA_tpm_TIL rows:", nrow(BRCA_tpm_TIL), "\n")
+
+# if still error
+# inspect barcode formats
+cat("TPM barcodes (first 3):\n")
+print(head(rownames(clean_BRCA_tpm_filtered_t), 3))
+cat("ABIS barcodes (first 3):\n")
+print(head(rownames(BRCA_TIL_abis), 3))
+
+cor_results_all <- lapply(cd8_col_names, function(til_col) {
+  til_vec <- as.numeric(BRCA_tpm_TIL[, til_col])  # force numeric
+  res <- sapply(BRCA_tpm_TIL[, gene_col_idx], function(gene_vec) {
+    gene_vec <- as.numeric(gene_vec)
+    valid <- is.finite(gene_vec) & is.finite(til_vec)
+    if (sum(valid) < 3) return(c(correlation = NA, p.value = NA))
+    test <- cor.test(gene_vec[valid], til_vec[valid], method = "spearman")
+    c(correlation = test$estimate, p.value = test$p.value)
+  })
+  df            <- as.data.frame(t(res))
+  df$adjusted.p <- p.adjust(df$p.value, method = "BH")
+  df$til_column <- til_col
+  df
+})
+names(cor_results_all) <- cd8_col_names
+
+passing_genes_TIL <- unique(unlist(lapply(cor_results_all, function(df) {
+  rownames(df)[df$correlation.rho < -0.2 & df$adjusted.p < 0.01]
+})))
+
+cat("Genes passing TIL correlation filter:", length(passing_genes_TIL), "\n")
+
+primary_cd8_col <- cd8_col_names[grep("activ", cd8_col_names, ignore.case = TRUE)]
+if (length(primary_cd8_col) == 0) primary_cd8_col <- cd8_col_names[1]
+
+BRCA_expr_T_activated          <- cor_results_all[[primary_cd8_col]]
+BRCA_expr_T_activated_filtered <- BRCA_expr_T_activated[
+  rownames(BRCA_expr_T_activated) %in% passing_genes_TIL, ]
+
+save_local(BRCA_expr_T_activated,          "BRCA_expr_T_activated.csv")
+save_local(BRCA_expr_T_activated_filtered, "BRCA_expr_T_activated_filtered.csv")
+
+# 8. correlation with immune markers (GSVA)
+
+# place geneSets.csv at GENESETS_FILE (set above in the configurations)
+# genesets can be found in the original paper
+gene_list_gs <- read.csv(GENESETS_FILE, header = TRUE, stringsAsFactors = FALSE)
+geneSets     <- list(gene_list_gs$genes)
+
+expr_matrix <- as.matrix(clean_BRCA_tpm)
+gsvaPar     <- gsvaParam(expr_matrix, geneSets, kcdf = "Poisson")
+gsva.es     <- gsva(gsvaPar, verbose = FALSE)
+rownames(gsva.es) <- "gsva.es"
+
+clean_BRCA_tpm_filtered2 <- subset(clean_BRCA_tpm,
+                                   rownames(clean_BRCA_tpm) %in% passing_genes_TIL)
+BRCA_tpm_ssGSEA   <- rbind(gsva.es, clean_BRCA_tpm_filtered2)
+BRCA_tpm_ssGSEA_t <- t(BRCA_tpm_ssGSEA)
+
+cat("til_vec NAs:", sum(is.na(til_vec)), "length:", length(til_vec), "\n")
+cat("gene_vec NAs:", sum(is.na(gene_vec)), "length:", length(gene_vec), "\n")
+cat("finite pairs:", sum(is.finite(til_vec) & is.finite(gene_vec)), "\n")
+
+results_list_gsva <- list()
+for (i in 2:ncol(BRCA_tpm_ssGSEA_t)) {
+  test <- cor.test(BRCA_tpm_ssGSEA_t[, i], BRCA_tpm_ssGSEA_t[, 1], method = "spearman")
+  results_list_gsva[[colnames(BRCA_tpm_ssGSEA_t)[i]]] <-
+    c(cor_coefficient = test$estimate, p_value = test$p.value)
+}
+
+BRCA_expr_immune_markers            <- as.data.frame(do.call(rbind, results_list_gsva))
+BRCA_expr_immune_markers$adjusted.p <- p.adjust(BRCA_expr_immune_markers$p_value, method = "BH")
+BRCA_expr_immune_markers_filtered   <- BRCA_expr_immune_markers[
+  BRCA_expr_immune_markers$cor_coefficient.rho < -0.20 &
+    BRCA_expr_immune_markers$adjusted.p < 0.01, ]
+
+cat("Genes passing immune marker filter:", nrow(BRCA_expr_immune_markers_filtered), "\n")
+
+save_local(BRCA_expr_immune_markers,          "BRCA_expr_immune_markers.csv")
+save_local(BRCA_expr_immune_markers_filtered, "BRCA_expr_immune_markers_filtered.csv")
+
+# 9. multivariate survival analysis
+
+BRCA_expr_survival_coef <- read_excel(SURVIVAL_FILE, sheet = "BRCA")
+BRCA_expr_survival_coef <- as.data.frame(BRCA_expr_survival_coef)
+BRCA_expr_survival_coef <- BRCA_expr_survival_coef[,
+                                                   -((ncol(BRCA_expr_survival_coef) - 2):ncol(BRCA_expr_survival_coef))]
+rownames(BRCA_expr_survival_coef) <- BRCA_expr_survival_coef[, 1]
+BRCA_expr_survival_coef           <- select(BRCA_expr_survival_coef, -1)
+
+BRCA_expr_survival_coef <- subset(BRCA_expr_survival_coef,
+                                  rownames(BRCA_expr_survival_coef) %in% rownames(BRCA_expr_immune_markers_filtered))
+BRCA_expr_survival_coef$adjusted.p <- p.adjust(BRCA_expr_survival_coef$p, method = "BH")
+
+BRCA_expr_survival_multivariate_filtered <- subset(BRCA_expr_survival_coef, coef > 0.15)
+
+cat("Genes passing multivariate survival filter:", nrow(BRCA_expr_survival_multivariate_filtered), "\n")
+
+save_local(BRCA_expr_survival_coef,                   "BRCA_expr_survival_coef.csv")
+save_local(BRCA_expr_survival_multivariate_filtered,  "BRCA_expr_survival_multivariate_filtered.csv")
+
+# 10. kaplan-meier survival analysis
+
+BRCA_clinical <- GDCquery_clinic(project = "TCGA-BRCA", type = "clinical")
+survival_data <- BRCA_clinical[, c("bcr_patient_barcode", "days_to_last_follow_up", "vital_status")]
+colnames(survival_data) <- c("patient_id", "OS.time", "OS.status")
+survival_data$OS.status <- ifelse(survival_data$OS.status == "Dead", 1, 0)
+
+clean_BRCA_tpm_temp <- subset(clean_BRCA_tpm,
+                              rownames(clean_BRCA_tpm) %in% rownames(BRCA_expr_survival_multivariate_filtered))
+colnames(clean_BRCA_tpm_temp) <- substr(colnames(clean_BRCA_tpm_temp), 1, 12)
+
+BRCA_surv_results <- data.frame(Gene = character(), P_value = numeric(), stringsAsFactors = FALSE)
+
+for (gene in rownames(clean_BRCA_tpm_temp)) {
+  tryCatch({
+    gene.df            <- as.data.frame(t(subset(clean_BRCA_tpm_temp,
+                                                 rownames(clean_BRCA_tpm_temp) == gene)))
+    gene.df$patient_id <- rownames(gene.df)
+    merged.data        <- na.omit(merge(survival_data, gene.df, by = "patient_id"))
+    cutpoint           <- surv_cutpoint(merged.data, time = "OS.time",
+                                        event = "OS.status", variables = gene)
+    if (is.na(cutpoint$cutpoint[[1]])) { next }
+    merged.data$group  <- ifelse(merged.data[, gene] > cutpoint$cutpoint[[1]], "High", "Low")
+    logrank_test       <- survdiff(Surv(OS.time, OS.status) ~ group, data = merged.data)
+    BRCA_surv_results  <- rbind(BRCA_surv_results,
+                                data.frame(Gene = gene, P_value = logrank_test$pval))
+  }, error = function(e) cat("Error for", gene, ":", e$message, "\n"))
+}
+
+BRCA_surv_results$adjusted_P_value <- p.adjust(BRCA_surv_results$P_value, method = "BH")
+BRCA_expr_survival_KM              <- BRCA_surv_results
+rownames(BRCA_expr_survival_KM)    <- BRCA_expr_survival_KM[, 1]
+BRCA_expr_survival_KM$Gene        <- NULL
+BRCA_expr_survival_KM_filtered     <- BRCA_expr_survival_KM[
+  BRCA_expr_survival_KM$adjusted_P_value < 0.05, ]
+
+cat("Genes passing KM filter:", nrow(BRCA_expr_survival_KM_filtered), "\n")
+
+save_local(BRCA_expr_survival_KM,          "BRCA_expr_survival_KM.csv")
+save_local(BRCA_expr_survival_KM_filtered, "BRCA_expr_survival_KM_filtered.csv")
+
+# 11. merge all filters
+
+BRCA_expr_T_activated_filtered <- BRCA_expr_T_activated_filtered %>%
+  rename_with(~ paste0("expr_T_activated_", .), everything())
+BRCA_expr_immune_markers_filtered <- BRCA_expr_immune_markers_filtered %>%
+  rename_with(~ paste0("expr_immune_markers_", .), everything())
+BRCA_expr_survival_multivariate_filtered <- BRCA_expr_survival_multivariate_filtered %>%
+  rename_with(~ paste0("expr_survival_multivariate_", .), everything())
+BRCA_expr_survival_KM_filtered <- BRCA_expr_survival_KM_filtered %>%
+  rename_with(~ paste0("expr_survival_KM_", .), everything())
+
+surviving_genes <- rownames(BRCA_expr_survival_KM_filtered)
+for (df_name in c("BRCA_expr_T_activated_filtered",
+                  "BRCA_expr_immune_markers_filtered",
+                  "BRCA_expr_survival_multivariate_filtered")) {
+  df <- get(df_name)
+  assign(df_name, subset(df, rownames(df) %in% surviving_genes))
+}
+
+BRCA_gene_list <- Reduce(function(x, y) {
+  m           <- merge(x, y, by = "row.names", all = FALSE)
+  rownames(m) <- m$Row.names
+  m$Row.names <- NULL
+  m
+}, list(BRCA_expr_T_activated_filtered,
+        BRCA_expr_immune_markers_filtered,
+        BRCA_expr_survival_multivariate_filtered,
+        BRCA_expr_survival_KM_filtered))
+
+cat("Final gene list size:", nrow(BRCA_gene_list), "\n")
+save_local(BRCA_gene_list, "BRCA_gene_list.csv")
+
+# 12. DESeq2 + GSEA
+
+expr_counts_mrna_symbol <- cbind(data.frame(symbol_mrna), as.data.frame(expr_counts_mrna))
+
+BRCA_counts <- expr_counts_mrna_symbol %>%
+  as_tibble() %>%
+  mutate(meanrow = rowMeans(.[, -1]), .before = 2) %>%
+  filter(meanrow >= 10) %>%
+  arrange(desc(meanrow)) %>%
+  distinct(symbol_mrna, .keep_all = TRUE) %>%
+  dplyr::select(-meanrow) %>%
+  column_to_rownames(var = "symbol_mrna") %>%
+  as.data.frame()
+
+colnames(BRCA_counts) <- substr(colnames(BRCA_counts), 1, 15)
+BRCA_counts           <- BRCA_counts[, !duplicated(colnames(BRCA_counts))]
+selected_cols         <- colnames(BRCA_counts)[substr(colnames(BRCA_counts), 14, 15) == "01"]
+clean_BRCA_counts     <- BRCA_counts[, selected_cols]
+
+cat("clean_BRCA_counts dimensions:", dim(clean_BRCA_counts), "\n")
+
+BRCA_screened_list  <- rownames(BRCA_gene_list)
+immune_pathway_rows <- list()
+
+for (gene in BRCA_screened_list) {
+  cat("Processing:", gene, "\n")
+  tryCatch({
+    group1_samples <- final_BRCA_cnv_results[[gene]][[1]]
+    group2_samples <- final_BRCA_cnv_results[[gene]][[2]]
+    
+    subset_counts <- clean_BRCA_counts[,
+                                       colnames(clean_BRCA_counts) %in% c(group1_samples, group2_samples)]
+    
+    sample_info       <- data.frame(
+      sample_name = colnames(subset_counts),
+      group       = ifelse(colnames(subset_counts) %in% group1_samples, "Group1", "Group2")
+    )
+    sample_info$group <- relevel(as.factor(sample_info$group), ref = "Group2")
+    
+    dds <- DESeqDataSetFromMatrix(countData = subset_counts,
+                                  colData   = sample_info,
+                                  design    = ~ group)
+    dds <- DESeq(dds)
+    res <- results(dds)
+    
+    gene_log2FC        <- data.frame(gene           = rownames(res),
+                                     log2FoldChange = res$log2FoldChange)
+    gene_log2FC        <- gene_log2FC[order(-gene_log2FC$log2FoldChange), ]
+    gene_log2FC        <- gene_log2FC[!is.na(gene_log2FC$log2FoldChange), ]
+    vec                <- setNames(gene_log2FC$log2FoldChange, gene_log2FC$gene)
+    
+    gsea_result <- gseGO(geneList      = vec,
+                         OrgDb         = org.Hs.eg.db,
+                         ont           = "ALL",
+                         keyType       = "SYMBOL",
+                         minGSSize     = 10,
+                         maxGSSize     = 500,
+                         pvalueCutoff  = 0.05,
+                         pAdjustMethod = "BH",
+                         verbose       = FALSE)
+    
+    immune_term_count      <- 0
+    antigen_MHC_term_count <- 0
+    
+    for (ont in c("BP", "CC", "MF")) {
+      filtered_result <- gsea_result[gsea_result$ONTOLOGY == ont &
+                                       gsea_result$pvalue < 0.05 &
+                                       gsea_result$p.adjust < 0.25, ]
+      immune_hits     <- grep("cytokine|interferon|interleukin|chemokine",
+                              filtered_result$Description, ignore.case = TRUE)
+      immune_hits     <- immune_hits[!grepl("cytokinesis|cytokinetic",
+                                            filtered_result$Description[immune_hits],
+                                            ignore.case = TRUE)]
+      immune_term_count      <- immune_term_count + length(immune_hits)
+      antigen_MHC_term_count <- antigen_MHC_term_count +
+        length(grep("antigen|MHC", filtered_result$Description, ignore.case = TRUE))
+    }
+    
+    immune_pathway_rows[[gene]] <- data.frame(
+      gene                   = gene,
+      immune_term_count      = immune_term_count,
+      antigen_MHC_term_count = antigen_MHC_term_count
+    )
+    
+  }, error = function(e) cat("  Error for", gene, ":", e$message, "\n"))
+}
+
+immune_pathway_df           <- do.call(rbind, immune_pathway_rows)
+rownames(immune_pathway_df) <- immune_pathway_df$gene
+immune_pathway_df           <- immune_pathway_df[, -1]
+immune_pathway_df           <- immune_pathway_df %>%
+  rename_with(~ paste0("immune_pathway_", .), everything())
+
+save_local(immune_pathway_df, "BRCA_immune_pathway_df.csv")
+
+BRCA_gene_list_final <- merge(BRCA_gene_list, immune_pathway_df, by = "row.names")
+save_local(BRCA_gene_list_final, "BRCA_gene_list_final.csv")
+
+cat("\nDone! All results saved to:", OUTPUT_DIR, "\n")
