@@ -219,6 +219,10 @@ for (method_name in names(deconvoluted)) {
              paste0("BRCA_TIL_", method_name, ".csv"))
 }
 
+# reload fresh from the deconvoluted object
+head(rownames(deconvoluted[["abis"]]), 5)
+nchar(rownames(deconvoluted[["abis"]])[1])
+
 # 5. load CNV data from local directory
 
 # NOTE: Download this file from UCSC Xena and place it at CNV_FILE (set above)
@@ -287,11 +291,14 @@ clean_BRCA_tpm_filtered_t <- as.data.frame(t(clean_BRCA_tpm_filtered))
 
 rownames(clean_BRCA_tpm_filtered_t) <- trimws(rownames(clean_BRCA_tpm_filtered_t))
 rownames(BRCA_TIL_abis)             <- trimws(rownames(BRCA_TIL_abis))
+
+# bug handling 
+# note this part
                                               
 # confirm TIL columns are numeric
-cat("TIL col class:", class(BRCA_tpm_TIL[, "T cell CD8+ memory"]), "\n")
-cat("TIL col NAs:", sum(is.na(BRCA_tpm_TIL[, "T cell CD8+ memory"])), "\n")
-cat("BRCA_tpm_TIL dims:", dim(BRCA_tpm_TIL), "\n")                                   
+cat("TIL col class:", class(BRCA_TIL_abis[, "T cell CD8+ memory"]), "\n")
+cat("TIL col NAs:", sum(is.na(BRCA_TIL_abis[, "T cell CD8+ memory"])), "\n")
+cat("BRCA_tpm_TIL dims:", dim(BRCA_TIL_abis), "\n")                                   
 
 # overlapping barcodes check
 sum(rownames(clean_BRCA_tpm_filtered_t) %in% rownames(BRCA_TIL_abis))
@@ -300,6 +307,37 @@ sum(rownames(clean_BRCA_tpm_filtered_t) %in% rownames(BRCA_TIL_abis))
 nchar(rownames(clean_BRCA_tpm_filtered_t)[1])
 nchar(rownames(BRCA_TIL_abis)[1])
 
+# convert to ASCII format
+rownames(clean_BRCA_tpm_filtered_t) <- iconv(trimws(rownames(clean_BRCA_tpm_filtered_t)),
+                                             to = "ASCII", sub = "-")
+rownames(BRCA_TIL_abis)             <- iconv(trimws(rownames(BRCA_TIL_abis)),
+                                             to = "ASCII", sub = "-")
+
+chartr("", "", rownames(clean_BRCA_tpm_filtered_t)[1])  # TPM
+chartr("", "", rownames(BRCA_TIL_abis)[1])              # ABIS
+
+# or more directly
+utf8ToInt(rownames(clean_BRCA_tpm_filtered_t)[1])
+utf8ToInt(rownames(BRCA_TIL_abis)[1])
+
+# try a tiny manual merge with just 3 rows each
+test_tpm  <- clean_BRCA_tpm_filtered_t[1:3, 1:3]
+test_abis <- BRCA_TIL_abis[1:3, 1:3]
+
+rownames(test_tpm)
+rownames(test_abis)
+
+merge(test_tpm, test_abis, by = "row.names", all = FALSE)
+
+# check for duplicate rownames in either table
+sum(duplicated(rownames(clean_BRCA_tpm_filtered_t)))
+sum(duplicated(rownames(BRCA_TIL_abis)))
+
+# THE KEY is to deduplicate the BRCA_TIL_abis
+
+# deduplicate the 16 samples
+BRCA_TIL_abis <- BRCA_TIL_abis[!duplicated(rownames(BRCA_TIL_abis)), ]
+cat("BRCA_TIL_abis rows after dedup:", nrow(BRCA_TIL_abis), "\n")
 
 # merge
 BRCA_tpm_TIL <- merge(clean_BRCA_tpm_filtered_t, BRCA_TIL_abis,
@@ -310,12 +348,13 @@ BRCA_tpm_TIL$Row.names <- NULL
 
 gene_col_idx <- 1:ncol(clean_BRCA_tpm_filtered_t)
 
-til_vec <- as.numeric(BRCA_tpm_TIL[, primary_cd8_col])
-
 # check dimensions before and after merge
 cat("clean_BRCA_tpm_filtered_t rows:", nrow(clean_BRCA_tpm_filtered_t), "\n")
 cat("BRCA_TIL_abis rows:", nrow(BRCA_TIL_abis), "\n")
 cat("BRCA_tpm_TIL rows:", nrow(BRCA_tpm_TIL), "\n")
+
+# save to local
+save_local(BRCA_tpm_TIL, "BRCA_tpm_TIL.csv")
 
 # if still error
 # inspect barcode formats
@@ -343,6 +382,8 @@ names(cor_results_all) <- cd8_col_names
 passing_genes_TIL <- unique(unlist(lapply(cor_results_all, function(df) {
   rownames(df)[df$correlation.rho < -0.2 & df$adjusted.p < 0.01]
 })))
+
+til_vec <- as.numeric(BRCA_tpm_TIL[, primary_cd8_col])
 
 cat("Genes passing TIL correlation filter:", length(passing_genes_TIL), "\n")
 
