@@ -14,13 +14,13 @@ OUTPUT_DIR <- file.path(LOCAL_WD, "/outputs")
 CNV_FILE <- file.path(DATASET_PATH, "TCGA.BRCA.sampleMap_Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes.gz")
 
 # path to survival file
-SURVIVAL_FILE <- file.path(DATASET_PATH, "/01_cox/BRCA.csv")
+SURVIVAL_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/clinical.tsv")
 
 # path to GSVA file
 GENESETS_FILE <- file.path(DATASET_PATH, "geneSets.csv")
 
 # path to BRCA exp file
-BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/data_mrna_seq_read_counts_zscores_ref_all_samples.txt")
+BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/exp_new.txt")
 
 # path to BRCA exp file
 TCGA_FILE <- file.path(LOCAL_WD, "/TCGA_BRCA_se.rds")
@@ -86,34 +86,41 @@ library(purrr)
 library(readxl)
 library(immunedeconv)
 
+
+# CHANGE
+# i'm changing the data, so i don't need to load it from GDC
 # 1. download the TCGA data using GDC API
 
 # delete the incomplete tar.gz chunks
 
 # check if the TCGA_FILE is present or not
-if (!file.exists(TCGA_FILE)) {
-  # file not found → download from GDC
-  file.remove(list.files(pattern = "*.tar.gz", full.names = TRUE))
-  
-  options(TCGA_downloaded_data = file.path(LOCAL_WD, "GDCdata"))
-  
-  query_expr <- GDCquery(project       = "TCGA-BRCA",
-                         data.category = "Transcriptome Profiling",
-                         data.type     = "Gene Expression Quantification",
-                         workflow.type = "STAR - Counts")
-  
-  GDCdownload(query_expr, method = "api", files.per.chunk = 10)
-  
-  se <- GDCprepare(query_expr)
-  
-  saveRDS(se, file = TCGA_FILE)
-  cat("SE object saved locally.\n")
-  
-} else {
-  # immediately access the downloaded data from the previous session
-  se <- readRDS(TCGA_FILE)
-  cat("SE object loaded from:", TCGA_FILE, "\n")
-}
+# if (!file.exists(TCGA_FILE)) {
+#   # file not found → download from GDC
+#   file.remove(list.files(pattern = "*.tar.gz", full.names = TRUE))
+#   
+#   options(TCGA_downloaded_data = file.path(LOCAL_WD, "GDCdata"))
+#   
+#   query_expr <- GDCquery(project       = "TCGA-BRCA",
+#                          data.category = "Transcriptome Profiling",
+#                          data.type     = "Gene Expression Quantification",
+#                          workflow.type = "STAR - Counts")
+#   
+#   GDCdownload(query_expr, method = "api", files.per.chunk = 10)
+#   
+#   se <- GDCprepare(query_expr)
+#   
+#   saveRDS(se, file = TCGA_FILE)
+#   cat("SE object saved locally.\n")
+#   
+# } else {
+#   # immediately access the downloaded data from the previous session
+#   se <- readRDS(TCGA_FILE)
+#   cat("SE object loaded from:", TCGA_FILE, "\n")
+# }
+
+
+# 1. load the exp data
+se <- BRCA_FILE
 
 rowdata      <- rowData(se)
 se_mrna      <- se[rowdata$gene_type == "protein_coding", ]
@@ -387,7 +394,7 @@ passing_genes_TIL <- unique(unlist(lapply(cor_results_all, function(df) {
   rownames(df)[df$correlation.rho < -0.2 & df$adjusted.p < 0.01]
 })))
 
-til_vec <- as.numeric(BRCA_tpm_TIL[, primary_cd8_col])
+til_vec <- as.numeric(BRCA_tpm_TIL[, "T cell CD8+ memory"])
 
 cat("Genes passing TIL correlation filter:", length(passing_genes_TIL), "\n")
 
@@ -500,74 +507,6 @@ BRCA_clinical <- GDCquery_clinic(project = "TCGA-BRCA", type = "clinical")
 survival_data <- BRCA_clinical[, c("bcr_patient_barcode", "days_to_last_follow_up", "vital_status")]
 colnames(survival_data) <- c("patient_id", "OS.time", "OS.status")
 survival_data$OS.status <- ifelse(survival_data$OS.status == "Dead", 1, 0)
-
-# subset tpm to final candidate genes only
-clean_BRCA_tpm_plot <- subset(clean_BRCA_tpm,
-                              rownames(clean_BRCA_tpm) %in% rownames(BRCA_gene_list_final))
-colnames(clean_BRCA_tpm_plot) <- substr(colnames(clean_BRCA_tpm_plot), 1, 12)
-
-# plot one KM curve per gene
-km_plots <- list()
-
-for (gene in rownames(clean_BRCA_tpm_plot)) {
-  tryCatch({
-    # prepare gene expression + survival data
-    gene.df            <- as.data.frame(t(clean_BRCA_tpm_plot[gene, , drop = FALSE]))
-    colnames(gene.df)  <- gene
-    gene.df$patient_id <- rownames(gene.df)
-    merged.data        <- na.omit(merge(survival_data, gene.df, by = "patient_id"))
-    
-    # find optimal cutpoint
-    cutpoint          <- surv_cutpoint(merged.data, time = "OS.time",
-                                       event = "OS.status", variables = gene)
-    if (is.na(cutpoint$cutpoint[[1]])) next
-    merged.data$group <- ifelse(merged.data[, gene] > cutpoint$cutpoint[[1]], "High", "Low")
-    
-    # log-rank p-value
-    logrank_test <- survdiff(Surv(OS.time, OS.status) ~ group, data = merged.data)
-    p_val        <- signif(logrank_test$pval, 3)
-    
-    # KM fit
-    fit <- survfit(Surv(OS.time, OS.status) ~ group, data = merged.data)
-    
-    # plot
-    km_plots[[gene]] <- ggsurvplot(
-      fit,
-      data          = merged.data,
-      title         = gene,
-      pval          = TRUE,
-      pval.method   = TRUE,
-      conf.int      = FALSE,
-      risk.table    = TRUE,
-      risk.table.height = 0.25,
-      palette       = c("#E7524A", "#4A90D9"),
-      legend.labs   = c("High", "Low"),
-      legend.title  = "Expression",
-      xlab          = "Days",
-      ylab          = "Overall survival probability",
-      ggtheme       = theme_classic(base_size = 12)
-    )
-    
-    cat("KM plot done:", gene, "\n")
-    
-  }, error = function(e) cat("Error for", gene, ":", e$message, "\n"))
-}
-
-# save individual KM plots
-for (gene in names(km_plots)) {
-  out_path <- file.path(PLOT_DIR, paste0("KM_", gene, ".pdf"))
-  pdf(out_path, width = 7, height = 7)
-  print(km_plots[[gene]])
-  dev.off()
-  cat("Saved:", out_path, "\n")
-}
-
-# save all KM plots in one combined PDF
-combined_path <- file.path(PLOT_DIR, "KM_all_genes.pdf")
-pdf(combined_path, width = 7, height = 7)
-for (gene in names(km_plots)) print(km_plots[[gene]])
-dev.off()
-cat("Saved combined KM PDF:", combined_path, "\n")
 
 # 11. merge all filters
 
@@ -697,12 +636,87 @@ immune_pathway_df           <- immune_pathway_df %>%
 save_local(immune_pathway_df, "BRCA_immune_pathway_df.csv")
 
 BRCA_gene_list_final <- merge(BRCA_gene_list, immune_pathway_df, by = "row.names")
+rownames(BRCA_gene_list_final) <- BRCA_gene_list_final$Row.names  # fix rownames
+BRCA_gene_list_final$Row.names <- NULL                            # clean up column
 save_local(BRCA_gene_list_final, "BRCA_gene_list_final.csv")
+
+# the KM plot should be here as the gene list are defined latter in the code
+# previous running works bc i added the km plot maker AFTER i ran the gene list part as well
+# my mistake was adding it into the survival analysis step (still in the filter part) instead of adding it to the result step
+
+# subset tpm to final candidate genes only
+clean_BRCA_tpm_plot <- subset(clean_BRCA_tpm,
+                              rownames(clean_BRCA_tpm) %in% rownames(BRCA_gene_list_final))
+colnames(clean_BRCA_tpm_plot) <- substr(colnames(clean_BRCA_tpm_plot), 1, 12)
+
+# plot one KM curve per gene
+km_plots <- list()
+
+for (gene in rownames(clean_BRCA_tpm_plot)) {
+  tryCatch({
+    # prepare gene expression + survival data
+    gene.df            <- as.data.frame(t(clean_BRCA_tpm_plot[gene, , drop = FALSE]))
+    colnames(gene.df)  <- gene
+    gene.df$patient_id <- rownames(gene.df)
+    merged.data        <- na.omit(merge(survival_data, gene.df, by = "patient_id"))
+    
+    # find optimal cutpoint
+    cutpoint          <- surv_cutpoint(merged.data, time = "OS.time",
+                                       event = "OS.status", variables = gene)
+    if (is.na(cutpoint$cutpoint[[1]])) next
+    merged.data$group <- ifelse(merged.data[, gene] > cutpoint$cutpoint[[1]], "High", "Low")
+    
+    # log-rank p-value
+    logrank_test <- survdiff(Surv(OS.time, OS.status) ~ group, data = merged.data)
+    p_val        <- signif(logrank_test$pval, 3)
+    
+    # KM fit
+    fit <- survfit(Surv(OS.time, OS.status) ~ group, data = merged.data)
+    
+    # plot
+    km_plots[[gene]] <- ggsurvplot(
+      fit,
+      data          = merged.data,
+      title         = gene,
+      pval          = TRUE,
+      pval.method   = TRUE,
+      conf.int      = FALSE,
+      risk.table    = TRUE,
+      risk.table.height = 0.25,
+      palette       = c("#E7524A", "#4A90D9"),
+      legend.labs   = c("High", "Low"),
+      legend.title  = "Expression",
+      xlab          = "Days",
+      ylab          = "Overall survival probability",
+      ggtheme       = theme_classic(base_size = 12)
+    )
+    
+    cat("KM plot done:", gene, "\n")
+    
+  }, error = function(e) cat("Error for", gene, ":", e$message, "\n"))
+}
+
+# save individual KM plots
+for (gene in names(km_plots)) {
+  out_path <- file.path(PLOT_DIR, paste0("KM_", gene, ".pdf"))
+  pdf(out_path, width = 7, height = 7)
+  print(km_plots[[gene]])
+  dev.off()
+  cat("Saved:", out_path, "\n")
+}
+
+# save all KM plots in one combined PDF
+combined_path <- file.path(PLOT_DIR, "KM_all_genes.pdf")
+pdf(combined_path, width = 7, height = 7)
+for (gene in names(km_plots)) print(km_plots[[gene]])
+dev.off()
+cat("Saved combined KM PDF:", combined_path, "\n")
 
 # 13. gene ranking
 # scoring logic:
-#   each filter contributes points based on how strongly a gene passed it
-#   all scores are rank-normalized to 0-1 so filters are comparable
+#   candidate pool = union of all genes that passed any filter
+#   each filter contributes a normalized 0-1 score based on effect strength
+#   missing = gene didn't pass that filter, treated as 0
 #   final score = mean of all normalized scores (higher = better candidate)
 
 # helper: normalize a vector to 0-1 range
@@ -711,58 +725,74 @@ norm01 <- function(x) {
   (x - min(x, na.rm = TRUE)) / diff(range(x, na.rm = TRUE))
 }
 
-# load filter result CSVs (use what was saved by the main pipeline)
-T_activated  <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_T_activated.csv"),
-                         row.names = 1)
-immune_mark  <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_immune_markers.csv"),
-                         row.names = 1)
-surv_coef    <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_survival_coef.csv"),
-                         row.names = 1)
-surv_KM      <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_survival_KM.csv"),
-                         row.names = 1)
-immune_path  <- read.csv(file.path(OUTPUT_DIR, "BRCA_immune_pathway_df.csv"),
-                         row.names = 1)
+# load filter result CSVs
+T_activated  <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_T_activated.csv"),         row.names = 1)
+immune_mark  <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_immune_markers.csv"),       row.names = 1)
+surv_coef    <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_survival_coef.csv"),        row.names = 1)
+surv_KM      <- read.csv(file.path(OUTPUT_DIR, "BRCA_expr_survival_KM.csv"),          row.names = 1)
+immune_path  <- read.csv(file.path(OUTPUT_DIR, "BRCA_immune_pathway_df.csv"),         row.names = 1)
 
-# candidate genes = final gene list
-candidate_genes <- rownames(BRCA_gene_list_final)
+# candidate pool = union of all genes across all filters
+candidate_genes <- unique(c(
+  rownames(T_activated),
+  rownames(immune_mark),
+  rownames(surv_coef),
+  rownames(surv_KM),
+  rownames(immune_path)
+))
+cat("Total candidate genes for ranking:", length(candidate_genes), "\n")
 
 # build scoring table, one row per candidate gene
-ranking <- data.frame(gene = candidate_genes, stringsAsFactors = FALSE)
+ranking           <- data.frame(gene = candidate_genes, stringsAsFactors = FALSE)
 rownames(ranking) <- candidate_genes
 
 # score 1: TIL correlation strength (more negative rho = stronger immune exclusion)
-# flip sign so higher score = stronger effect
-ranking$score_TIL <- -T_activated[candidate_genes, "correlation.rho"]
+ranking$score_TIL <- ifelse(candidate_genes %in% rownames(T_activated),
+                            -T_activated[candidate_genes, "correlation.rho"],
+                            NA)
 
 # score 2: GSVA immune marker correlation strength (more negative = better)
-ranking$score_GSVA <- -immune_mark[candidate_genes, "cor_coefficient.rho"]
+ranking$score_GSVA <- ifelse(candidate_genes %in% rownames(immune_mark),
+                             -immune_mark[candidate_genes, "cor_coefficient.rho"],
+                             NA)
 
 # score 3: multivariate survival coefficient (higher coef = worse prognosis = more relevant)
-ranking$score_surv_coef <- surv_coef[candidate_genes, "coef"]
+ranking$score_surv_coef <- ifelse(candidate_genes %in% rownames(surv_coef),
+                                  surv_coef[candidate_genes, "coef"],
+                                  NA)
 
 # score 4: KM significance (-log10 adjusted p, higher = more significant)
-ranking$score_KM <- -log10(surv_KM[candidate_genes, "adjusted_P_value"] + 1e-10)
+ranking$score_KM <- ifelse(candidate_genes %in% rownames(surv_KM),
+                           -log10(surv_KM[candidate_genes, "adjusted_P_value"] + 1e-10),
+                           NA)
 
 # score 5: immune pathway hits from GSEA (more hits = more immune-relevant)
-ranking$score_immune_pathway <- immune_path[candidate_genes, "immune_pathway_immune_term_count"] +
-  immune_path[candidate_genes, "immune_pathway_antigen_MHC_term_count"]
+ranking$score_immune_pathway <- ifelse(candidate_genes %in% rownames(immune_path),
+                                       immune_path[candidate_genes, "immune_pathway_immune_term_count"] +
+                                         immune_path[candidate_genes, "immune_pathway_antigen_MHC_term_count"],
+                                       NA)
 
-# normalize each score to 0-1
+# normalize each score to 0-1 across all candidates (NA stays NA, becomes 0 after)
 score_cols <- c("score_TIL", "score_GSVA", "score_surv_coef", "score_KM", "score_immune_pathway")
 for (col in score_cols) {
-  ranking[[paste0(col, "_norm")]] <- norm01(ranking[[col]])
+  norm_col                <- norm01(ranking[[col]])
+  norm_col[is.na(ranking[[col]])] <- 0  # genes that didn't reach this filter score 0
+  ranking[[paste0(col, "_norm")]] <- norm_col
 }
 
 # final score = mean of normalized scores
-norm_cols          <- paste0(score_cols, "_norm")
+norm_cols           <- paste0(score_cols, "_norm")
 ranking$final_score <- rowMeans(ranking[, norm_cols], na.rm = TRUE)
+
+# track how many filters each gene passed
+ranking$filters_passed <- rowSums(!is.na(ranking[, score_cols]))
 
 # sort by final score descending
 ranking <- ranking[order(-ranking$final_score), ]
 ranking$rank <- seq_len(nrow(ranking))
 
 cat("\nTop 10 ranked genes:\n")
-print(ranking[1:min(10, nrow(ranking)), c("rank", "gene", "final_score", norm_cols)])
+print(ranking[1:10, c("rank", "gene", "final_score", "filters_passed", norm_cols)])
 
 # save ranking table
 save_local(ranking, "BRCA_gene_ranking.csv")
@@ -807,7 +837,7 @@ p_ranking <- ggplot(ranking_long, aes(x = filter, y = gene, size = score, color 
 # save ranking plot
 ranking_plot_path <- file.path(PLOT_DIR, "gene_ranking_dotplot.pdf")
 ggsave(ranking_plot_path, p_ranking,
-       width  = max(6, nrow(ranking) * 0.35),
+       width  = min(20, max(6, nrow(ranking) * 0.35)),
        height = 5)
 cat("Saved:", ranking_plot_path, "\n")
 
@@ -820,13 +850,13 @@ p_bar <- ggplot(ranking, aes(x = reorder(gene, final_score), y = final_score)) +
     x     = NULL,
     y     = "Final score (mean of normalized filter scores)"
   ) +
-  theme_classic(base_size = 11) +
+  theme_classic(base_size = 11)
   theme(plot.title = element_text(face = "bold"))
 
 bar_plot_path <- file.path(PLOT_DIR, "gene_ranking_barplot.pdf")
 ggsave(bar_plot_path, p_bar,
-       width  = 6,
-       height = max(4, nrow(ranking) * 0.3))
+       width  = min(20, max(6, nrow(ranking) * 0.35)),
+       height = 5)
 cat("Saved:", bar_plot_path, "\n")
 
 cat("\nAll plots saved to:", PLOT_DIR, "\n")
