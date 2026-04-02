@@ -20,7 +20,7 @@ SURVIVAL_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/clinical.tsv")
 GENESETS_FILE <- file.path(DATASET_PATH, "geneSets.csv")
 
 # path to BRCA exp file
-BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/exp_new.txt")
+BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_fpkm-uq.tsv")
 
 # path to BRCA exp file
 TCGA_FILE <- file.path(LOCAL_WD, "/TCGA_BRCA_se.rds")
@@ -120,16 +120,14 @@ library(immunedeconv)
 
 
 # 1. load the exp data
-se <- BRCA_FILE
+raw <- read.table(BRCA_FILE, header = TRUE, sep = "\t",
+                  row.names = 1, check.names = FALSE)
 
-rowdata      <- rowData(se)
-se_mrna      <- se[rowdata$gene_type == "protein_coding", ]
-symbol_mrna  <- rowData(se_mrna)$gene_name
+expr_tpm_mrna    <- as.matrix(raw)
+symbol_mrna      <- rownames(raw)
 
-expr_tpm_mrna    <- assay(se_mrna, "tpm_unstrand")
-expr_counts_mrna <- assay(se_mrna, "unstranded")
-
-cat("SE object dimensions:", dim(se_mrna), "\n")
+expr_counts_mrna <- as.matrix(raw)
+symbol_mrna      <- rownames(raw)
 
 # 2. data pre-processing 
 
@@ -156,19 +154,15 @@ cat("Sample type codes:\n")
 print(table(substr(colnames(clean_BRCA_tpm), 14, 15)))
 
 # 3. batch effect removal
+# skipping - barcodes are truncated to 16 chars (sample level only),
+# no plate/batch info available. STAR FPKM-UQ is uniformly processed so this is fine.
 
-meta <- data.frame(
-  barcode     = colnames(se),
-  sample_type = se$sample_type,
-  stringsAsFactors = FALSE
-)
-rownames(meta) <- meta$barcode
-meta$batch     <- substr(meta$barcode, 22, 25)
+cat("Skipping batch correction - single unified pipeline detected.\n")
 
-dat        <- assay(se_mrna, "tpm_unstrand")
+dat        <- expr_tpm_mrna
 dat_log2   <- log2(dat + 1)
-expr_limma <- limma::removeBatchEffect(dat_log2, batch = meta[colnames(dat_log2), "batch"])
-expr_limma <- as.matrix(2^expr_limma - 1)
+expr_limma <- as.matrix(2^dat_log2 - 1)   # passthrough, no correction applied
+
 rownames(expr_limma) <- symbol_mrna
 
 expr_limma_df       <- as.data.frame(expr_limma)
@@ -185,6 +179,35 @@ expr_limma_sym           <- na.omit(expr_limma_sym)
 
 matrix_in_cols <- colnames(expr_limma_sym)[substr(colnames(expr_limma_sym), 14, 15) == "01"]
 matrix_in      <- expr_limma_sym[, matrix_in_cols]
+
+# 3.1 change the gene name from ensmbl to a name
+
+# strip version numbers from Ensembl IDs (e.g. ENSG00000000003.15 -> ENSG00000000003)
+rownames(matrix_in) <- sub("\\..*$", "", rownames(matrix_in))
+
+# verify
+head(rownames(matrix_in), 5)
+
+# convert Ensembl IDs to gene symbols
+id_map <- AnnotationDbi::select(org.Hs.eg.db,
+                                keys    = rownames(matrix_in),
+                                columns = "SYMBOL",
+                                keytype = "ENSEMBL")
+
+# keep only 1:1 mappings, drop NAs
+id_map <- id_map[!is.na(id_map$SYMBOL), ]
+id_map <- id_map[!duplicated(id_map$ENSEMBL), ]
+
+# subset and rename matrix
+matrix_in_sym <- matrix_in[rownames(matrix_in) %in% id_map$ENSEMBL, ]
+rownames(matrix_in_sym) <- id_map$SYMBOL[match(rownames(matrix_in_sym), id_map$ENSEMBL)]
+
+# remove duplicated symbols (keep highest mean)
+matrix_in_sym <- matrix_in_sym[order(-rowMeans(matrix_in_sym)), ]
+matrix_in_sym <- matrix_in_sym[!duplicated(rownames(matrix_in_sym)), ]
+
+cat("matrix_in_sym dimensions:", dim(matrix_in_sym), "\n")
+cat("First 5 gene names:", head(rownames(matrix_in_sym), 5), "\n")
 
 cat("Batch-corrected matrix dimensions:", dim(matrix_in), "\n")
 
