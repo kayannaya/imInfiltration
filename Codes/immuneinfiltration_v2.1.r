@@ -1,7 +1,6 @@
 # Immune Infiltration Analysis
 # Modified from Google Colab (immuneinfiltration_v2)
-
-# This uses data from Xenabrowser
+# This version uses EntrezID
 
 # path configuration
 
@@ -21,13 +20,13 @@ SURVIVAL_FILE <- file.path(DATASET_PATH, "/01_cox/BRCA.csv")
 # path to GSVA file
 GENESETS_FILE <- file.path(DATASET_PATH, "geneSets.csv")
 
-# path to BRCA exp file (for the deconvolution)
-BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_fpkm-uq.tsv")
+# path to BRCA exp file (for deconvolution)
+BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/data_mrna_seq_tpm.txt")
 
-# path to BRCA counts exp file (for DESeq2)
-BRCA_COUNTS_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_counts.tsv")
+# path to BRCA counts file (for the DESeq2)]
+BRCA__COUNTS_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/data_mrna_seq_read_counts.txt")
 
-# path to BRCA RDS exp file
+# path to BRCA exp file
 TCGA_FILE <- file.path(LOCAL_WD, "/TCGA_BRCA_se.rds")
 
 # path to plot folder
@@ -123,22 +122,46 @@ library(immunedeconv)
 #   cat("SE object loaded from:", TCGA_FILE, "\n")
 # }
 
-
 # 1. load the exp data
 raw <- read.table(BRCA_FILE, header = TRUE, sep = "\t",
-                  row.names = 1, check.names = FALSE)
+                  check.names = FALSE, stringsAsFactors = FALSE)
+
+# check what the first few columns look like
+cat("First 3 column names:", colnames(raw)[1:3], "\n")
+cat("First 5 values in col 1:", head(raw[, 1], 5), "\n")
+
+# set Entrez IDs as rownames
+rownames(raw) <- raw[, 1]
+raw           <- raw[, -1]  # drop Entrez column
 
 expr_tpm_mrna <- as.matrix(raw)
 
-# strip version numbers and deduplicate at the source
-rownames(expr_tpm_mrna) <- sub("\\..*$", "", rownames(expr_tpm_mrna))
-expr_tpm_mrna <- expr_tpm_mrna[order(-rowMeans(expr_tpm_mrna)), ]
-expr_tpm_mrna <- expr_tpm_mrna[!duplicated(rownames(expr_tpm_mrna)), ]
+# convert Entrez IDs to gene symbols
+id_map <- AnnotationDbi::select(org.Hs.eg.db,
+                                keys    = rownames(expr_tpm_mrna),
+                                columns = "SYMBOL",
+                                keytype = "ENTREZID")
 
-symbol_mrna      <- rownames(expr_tpm_mrna)
-expr_counts_mrna <- expr_tpm_mrna   # same data, placeholder for section 12
+id_map <- id_map[!is.na(id_map$SYMBOL), ]
+id_map <- id_map[!duplicated(id_map$ENTREZID), ]
+
+# convert via temp column to avoid duplicate rowname error
+expr_tpm_mrna_df          <- as.data.frame(expr_tpm_mrna)
+expr_tpm_mrna_df$symbol   <- id_map$SYMBOL[match(rownames(expr_tpm_mrna_df), id_map$ENTREZID)]
+expr_tpm_mrna_df$meanexpr <- rowMeans(expr_tpm_mrna_df[, -ncol(expr_tpm_mrna_df)], na.rm = TRUE)
+expr_tpm_mrna_df          <- expr_tpm_mrna_df[!is.na(expr_tpm_mrna_df$symbol), ]
+expr_tpm_mrna_df          <- expr_tpm_mrna_df[order(-expr_tpm_mrna_df$meanexpr), ]
+expr_tpm_mrna_df          <- expr_tpm_mrna_df[!duplicated(expr_tpm_mrna_df$symbol), ]
+rownames(expr_tpm_mrna_df) <- expr_tpm_mrna_df$symbol
+expr_tpm_mrna_df$symbol   <- NULL
+expr_tpm_mrna_df$meanexpr <- NULL
+
+expr_tpm_mrna <- as.matrix(expr_tpm_mrna_df)
+symbol_mrna   <- rownames(expr_tpm_mrna)
+expr_counts_mrna <- expr_tpm_mrna  # placeholder, will be replaced in section 12
 
 cat("Loaded:", nrow(expr_tpm_mrna), "genes x", ncol(expr_tpm_mrna), "samples\n")
+cat("First 5 gene names:", head(symbol_mrna, 5), "\n")
 
 # 2. data pre-processing 
 
@@ -595,41 +618,51 @@ save_local(BRCA_gene_list, "BRCA_gene_list.csv")
 
 # load raw counts (separate file)
 raw_counts <- read.table(BRCA_COUNTS_FILE, header = TRUE, sep = "\t",
-                         row.names = 1, check.names = FALSE)
+                         check.names = FALSE, stringsAsFactors = FALSE)
+
+cat("First 3 column names:", colnames(raw_counts)[1:3], "\n")
+cat("First 3 row names:", rownames(raw_counts)[1:3], "\n")
+cat("Class of col 1:", class(raw_counts[, 1]), "\n")
+cat("Class of col 2:", class(raw_counts[, 2]), "\n")
+
+# set Ensembl_ID column as rownames
+rownames(raw_counts) <- raw_counts$Ensembl_ID
+raw_counts$Ensembl_ID <- NULL
 
 # strip version numbers and deduplicate
-rownames(raw_counts) <- sub("\\..*$", "", rownames(raw_counts))
-raw_counts <- raw_counts[order(-rowMeans(raw_counts)), ]
-raw_counts <- raw_counts[!duplicated(rownames(raw_counts)), ]
+raw_counts$base_id  <- sub("\\..*$", "", rownames(raw_counts))
+raw_counts$meanexpr <- rowMeans(raw_counts[, !colnames(raw_counts) %in% c("base_id", "meanexpr")], na.rm = TRUE)
+raw_counts          <- raw_counts[order(-raw_counts$meanexpr), ]
+raw_counts          <- raw_counts[!duplicated(raw_counts$base_id), ]
+rownames(raw_counts) <- raw_counts$base_id
+raw_counts$base_id  <- NULL
+raw_counts$meanexpr <- NULL
 
-# convert expr_counts_mrna rownames to symbols using the same id_map
-expr_counts_mrna_sym           <- as.data.frame(expr_counts_mrna)
-expr_counts_mrna_sym$symbol    <- id_map$SYMBOL[match(rownames(expr_counts_mrna_sym), id_map$ENSEMBL)]
-expr_counts_mrna_sym$meanexpr  <- rowMeans(expr_counts_mrna_sym[, -ncol(expr_counts_mrna_sym)], na.rm = TRUE)
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[!is.na(expr_counts_mrna_sym$symbol), ]
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[order(-expr_counts_mrna_sym$meanexpr), ]
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[!duplicated(expr_counts_mrna_sym$symbol), ]
-rownames(expr_counts_mrna_sym) <- expr_counts_mrna_sym$symbol
-expr_counts_mrna_sym$symbol    <- NULL
-expr_counts_mrna_sym$meanexpr  <- NULL
+cat("raw_counts dimensions:", dim(raw_counts), "\n")
+cat("First 5 rownames:", head(rownames(raw_counts), 5), "\n")
 
-# now replace the old symbol_mrna-based block
-expr_counts_mrna_symbol <- expr_counts_mrna_sym
+# convert Ensembl IDs to symbols using the same id_map from section 3.1
+raw_counts_sym          <- as.data.frame(raw_counts)
+raw_counts_sym$symbol   <- id_map$SYMBOL[match(rownames(raw_counts_sym), id_map$ENSEMBL)]
+raw_counts_sym$meanexpr <- rowMeans(raw_counts_sym[, -ncol(raw_counts_sym)], na.rm = TRUE)
+raw_counts_sym          <- raw_counts_sym[!is.na(raw_counts_sym$symbol), ]
+raw_counts_sym          <- raw_counts_sym[order(-raw_counts_sym$meanexpr), ]
+raw_counts_sym          <- raw_counts_sym[!duplicated(raw_counts_sym$symbol), ]
+rownames(raw_counts_sym) <- raw_counts_sym$symbol
+raw_counts_sym$symbol   <- NULL
+raw_counts_sym$meanexpr <- NULL
 
-BRCA_counts <- expr_counts_mrna_symbol %>%
-  mutate(meanrow = rowMeans(.), .before = 1) %>%
-  filter(meanrow >= 10) %>%
-  dplyr::select(-meanrow) %>%
-  as.data.frame()
-
-colnames(BRCA_counts) <- substr(colnames(BRCA_counts), 1, 15)
-BRCA_counts           <- BRCA_counts[, !duplicated(colnames(BRCA_counts))]
-selected_cols         <- colnames(BRCA_counts)[substr(colnames(BRCA_counts), 14, 15) == "01"]
-clean_BRCA_counts     <- BRCA_counts[, selected_cols]
-clean_BRCA_counts     <- round(clean_BRCA_counts)
-mode(clean_BRCA_counts) <- "integer"
+# build clean counts matrix (tumor samples only)
+colnames(raw_counts_sym) <- substr(colnames(raw_counts_sym), 1, 15)
+raw_counts_sym           <- raw_counts_sym[, !duplicated(colnames(raw_counts_sym))]
+selected_cols            <- colnames(raw_counts_sym)[substr(colnames(raw_counts_sym), 14, 15) == "01"]
+clean_BRCA_counts        <- raw_counts_sym[, selected_cols]
+clean_BRCA_counts        <- as.matrix(clean_BRCA_counts)
+clean_BRCA_counts        <- round(clean_BRCA_counts)
+mode(clean_BRCA_counts)  <- "integer"
 
 cat("clean_BRCA_counts dimensions:", dim(clean_BRCA_counts), "\n")
+cat("First 5 rownames:", head(rownames(clean_BRCA_counts), 5), "\n")
 
 BRCA_screened_list  <- rownames(BRCA_gene_list)
 immune_pathway_rows <- list()
