@@ -22,7 +22,7 @@ SURVIVAL_FILE <- file.path(DATASET_PATH, "/01_cox/BRCA.csv")
 GENESETS_FILE <- file.path(DATASET_PATH, "geneSets.csv")
 
 # path to BRCA exp file (for the deconvolution)
-BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_fpkm-uq.tsv")
+BRCA_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_tpm.tsv")
 
 # path to BRCA counts exp file (for DESeq2)
 BRCA_COUNTS_FILE <- file.path(DATASET_PATH, "/brca_tcga_gdc/TCGA-BRCA.star_counts.tsv")
@@ -136,7 +136,6 @@ expr_tpm_mrna <- expr_tpm_mrna[order(-rowMeans(expr_tpm_mrna)), ]
 expr_tpm_mrna <- expr_tpm_mrna[!duplicated(rownames(expr_tpm_mrna)), ]
 
 symbol_mrna      <- rownames(expr_tpm_mrna)
-expr_counts_mrna <- expr_tpm_mrna   # same data, placeholder for section 12
 
 cat("Loaded:", nrow(expr_tpm_mrna), "genes x", ncol(expr_tpm_mrna), "samples\n")
 
@@ -165,6 +164,15 @@ cat("Sample type codes:\n")
 print(table(substr(colnames(clean_BRCA_tpm), 14, 15)))
 
 # 2.1 convert clean_BRCA_tpm rownames from Ensembl to symbols
+id_map <- AnnotationDbi::select(org.Hs.eg.db,
+                                keys    = rownames(clean_BRCA_tpm),
+                                columns = "SYMBOL",
+                                keytype = "ENSEMBL")
+
+# drop NAs and duplicated Ensembl IDs
+id_map <- id_map[!is.na(id_map$SYMBOL), ]
+id_map <- id_map[!duplicated(id_map$ENSEMBL), ]
+
 clean_BRCA_tpm           <- as.data.frame(clean_BRCA_tpm)
 clean_BRCA_tpm$symbol    <- id_map$SYMBOL[match(rownames(clean_BRCA_tpm), id_map$ENSEMBL)]
 clean_BRCA_tpm$meanexpr  <- rowMeans(clean_BRCA_tpm[, -ncol(clean_BRCA_tpm)], na.rm = TRUE)
@@ -206,17 +214,6 @@ expr_limma_sym           <- na.omit(expr_limma_sym)
 
 matrix_in_cols <- colnames(expr_limma_sym)[substr(colnames(expr_limma_sym), 14, 15) == "01"]
 matrix_in      <- expr_limma_sym[, matrix_in_cols]
-
-# 3.1 change the gene name from ensembl to symbol
-
-id_map <- AnnotationDbi::select(org.Hs.eg.db,
-                                keys    = rownames(matrix_in),
-                                columns = "SYMBOL",
-                                keytype = "ENSEMBL")
-
-# drop NAs and duplicated Ensembl IDs
-id_map <- id_map[!is.na(id_map$SYMBOL), ]
-id_map <- id_map[!duplicated(id_map$ENSEMBL), ]
 
 # subset matrix to mappable genes
 matrix_in_sym <- matrix_in[rownames(matrix_in) %in% id_map$ENSEMBL, ]
@@ -299,6 +296,9 @@ selected_cols  <- colnames(BRCA_cnv)[substr(colnames(BRCA_cnv), 14, 15) == "01"]
 clean_BRCA_cnv <- BRCA_cnv[, selected_cols]
 
 cat("clean_BRCA_cnv dimensions:", dim(clean_BRCA_cnv), "\n")
+cat("TPM barcode format:", colnames(clean_BRCA_tpm)[1], "\n")
+cat("CNV barcode format:", colnames(clean_BRCA_cnv)[1], "\n")
+cat("Common samples:", length(intersect(colnames(clean_BRCA_tpm), colnames(clean_BRCA_cnv))), "\n")
 
 # 6. cnv + expression grouping
 
@@ -356,7 +356,7 @@ rownames(BRCA_TIL_abis)             <- trimws(rownames(BRCA_TIL_abis))
 
 # bug handling 
 # note this part
-                                              
+
 # confirm TIL columns are numeric
 cat("TIL col class:", class(BRCA_TIL_abis[, "T cell CD8+ memory"]), "\n")
 cat("TIL col NAs:", sum(is.na(BRCA_TIL_abis[, "T cell CD8+ memory"])), "\n")
@@ -467,7 +467,7 @@ gene_list_gs <- read.csv(GENESETS_FILE, header = TRUE, stringsAsFactors = FALSE)
 geneSets     <- list(gene_list_gs$genes)
 
 expr_matrix <- as.matrix(clean_BRCA_tpm)
-gsvaPar     <- gsvaParam(expr_matrix, geneSets, kcdf = "Poisson")
+gsvaPar     <- gsvaParam(expr_matrix, geneSets, kcdf = "Gaussian")
 gsva.es     <- gsva(gsvaPar, verbose = FALSE)
 rownames(gsva.es) <- "gsva.es"
 
@@ -598,38 +598,47 @@ raw_counts <- read.table(BRCA_COUNTS_FILE, header = TRUE, sep = "\t",
                          row.names = 1, check.names = FALSE)
 
 # strip version numbers and deduplicate
-rownames(raw_counts) <- sub("\\..*$", "", rownames(raw_counts))
-raw_counts <- raw_counts[order(-rowMeans(raw_counts)), ]
-raw_counts <- raw_counts[!duplicated(rownames(raw_counts)), ]
+# the before code just removed the version numbers and make the corrected rows to have the same name
+# example: ENSG00000002586.1 and ENSG00000002586.2 both become ENSG00000002586
+# the new code keeps the version with the highest expressed version
+raw_counts$gene_id <- sub("\\..*$", "", rownames(raw_counts))
+raw_counts$meanrow <- rowMeans(raw_counts[, !colnames(raw_counts) %in% c("gene_id", "meanrow")])
+raw_counts         <- raw_counts[order(-raw_counts$meanrow), ]
+raw_counts         <- raw_counts[!duplicated(raw_counts$gene_id), ]
+rownames(raw_counts) <- raw_counts$gene_id
+raw_counts$gene_id <- NULL
+raw_counts$meanrow <- NULL
 
-# convert expr_counts_mrna rownames to symbols using the same id_map
-expr_counts_mrna_sym           <- as.data.frame(expr_counts_mrna)
-expr_counts_mrna_sym$symbol    <- id_map$SYMBOL[match(rownames(expr_counts_mrna_sym), id_map$ENSEMBL)]
-expr_counts_mrna_sym$meanexpr  <- rowMeans(expr_counts_mrna_sym[, -ncol(expr_counts_mrna_sym)], na.rm = TRUE)
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[!is.na(expr_counts_mrna_sym$symbol), ]
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[order(-expr_counts_mrna_sym$meanexpr), ]
-expr_counts_mrna_sym           <- expr_counts_mrna_sym[!duplicated(expr_counts_mrna_sym$symbol), ]
-rownames(expr_counts_mrna_sym) <- expr_counts_mrna_sym$symbol
-expr_counts_mrna_sym$symbol    <- NULL
-expr_counts_mrna_sym$meanexpr  <- NULL
+# convert Ensembl to symbols using id_map from section 3
+raw_counts_sym          <- as.data.frame(raw_counts)
+raw_counts_sym$symbol   <- id_map$SYMBOL[match(rownames(raw_counts_sym), id_map$ENSEMBL)]
+raw_counts_sym$meanexpr <- rowMeans(raw_counts_sym[, !colnames(raw_counts_sym) %in% "symbol"],
+                                    na.rm = TRUE)
+raw_counts_sym <- raw_counts_sym[!is.na(raw_counts_sym$symbol), ]
+raw_counts_sym <- raw_counts_sym[order(-raw_counts_sym$meanexpr), ]
+raw_counts_sym <- raw_counts_sym[!duplicated(raw_counts_sym$symbol), ]
+rownames(raw_counts_sym) <- raw_counts_sym$symbol
+raw_counts_sym$symbol    <- NULL
+raw_counts_sym$meanexpr  <- NULL
 
-# now replace the old symbol_mrna-based block
-expr_counts_mrna_symbol <- expr_counts_mrna_sym
-
-BRCA_counts <- expr_counts_mrna_symbol %>%
-  mutate(meanrow = rowMeans(.), .before = 1) %>%
-  filter(meanrow >= 10) %>%
-  dplyr::select(-meanrow) %>%
-  as.data.frame()
-
+# filter, subset to tumour samples, fix barcodes
+BRCA_counts <- raw_counts_sym[rowMeans(raw_counts_sym) >= 10, ]
 colnames(BRCA_counts) <- substr(colnames(BRCA_counts), 1, 15)
 BRCA_counts           <- BRCA_counts[, !duplicated(colnames(BRCA_counts))]
 selected_cols         <- colnames(BRCA_counts)[substr(colnames(BRCA_counts), 14, 15) == "01"]
 clean_BRCA_counts     <- BRCA_counts[, selected_cols]
-clean_BRCA_counts     <- round(clean_BRCA_counts)
-mode(clean_BRCA_counts) <- "integer"
+
+# convert to integer for DESeq2
+clean_BRCA_counts <- round(clean_BRCA_counts)
+rn                <- rownames(clean_BRCA_counts)
+clean_BRCA_counts <- as.data.frame(lapply(clean_BRCA_counts, as.integer))
+rownames(clean_BRCA_counts) <- rn
+
+# standardize separators to match final_BRCA_cnv_results (hyphens)
+colnames(clean_BRCA_counts) <- gsub("\\.", "-", colnames(clean_BRCA_counts))
 
 cat("clean_BRCA_counts dimensions:", dim(clean_BRCA_counts), "\n")
+# expect thousands of genes x ~1000 samples
 
 BRCA_screened_list  <- rownames(BRCA_gene_list)
 immune_pathway_rows <- list()
@@ -921,7 +930,7 @@ p_bar <- ggplot(ranking, aes(x = reorder(gene, final_score), y = final_score)) +
     y     = "Final score (mean of normalized filter scores)"
   ) +
   theme_classic(base_size = 11)
-  theme(plot.title = element_text(face = "bold"))
+theme(plot.title = element_text(face = "bold"))
 
 bar_plot_path <- file.path(PLOT_DIR, "gene_ranking_barplot.pdf")
 ggsave(bar_plot_path, p_bar,
