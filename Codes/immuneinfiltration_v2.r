@@ -941,3 +941,17 @@ cat("Saved:", bar_plot_path, "\n")
 cat("\nAll plots saved to:", PLOT_DIR, "\n")
 
 cat("\nDone! All results saved to:", OUTPUT_DIR, "\n")
+
+# checking where did LINC00707 got erased
+target_ensembl <- "ENSG00000238266"
+target_symbol  <- "LINC00707"
+
+cat("1. In raw expr_tpm_mrna:", target_ensembl %in% rownames(expr_tpm_mrna), "\n")
+cat("2. In BRCA_tpm (after meanrow>=1):", target_ensembl %in% rownames(BRCA_tpm), "\n")
+cat("3. In clean_BRCA_tpm (after symbol map):", target_symbol %in% rownames(clean_BRCA_tpm), "\n")
+cat("4. In final_BRCA_cnv_results (CNV filter):", target_symbol %in% names(final_BRCA_cnv_results), "\n")
+cat("5. In passing_genes_TIL (TIL filter):", target_symbol %in% passing_genes_TIL, "\n")
+cat("6. In immune_markers_filtered (GSVA filter):", target_symbol %in% rownames(BRCA_expr_immune_markers_filtered), "\n")
+cat("7. In survival_multivariate_filtered:", target_symbol %in% rownames(BRCA_expr_survival_multivariate_filtered), "\n")
+cat("8. In KM_filtered:", target_symbol %in% rownames(BRCA_expr_survival_KM_filtered), "\n")
+cat("9. In final gene list:", target_symbol %in% rownames(BRCA_gene_list_final), "\n")
