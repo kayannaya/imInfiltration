@@ -942,10 +942,16 @@ cat("\nAll plots saved to:", PLOT_DIR, "\n")
 
 cat("\nDone! All results saved to:", OUTPUT_DIR, "\n")
 
-# checking where did LINC00707 got erased
+# CHECK target gene specifically
+# LINC00707
+
+# configuration
+# just input your gene here
 target_ensembl <- "ENSG00000238266"
 target_symbol  <- "LINC00707"
 
+# checking where did the gene get erased
+# this can be used for analysis 
 cat("1. In raw expr_tpm_mrna:", target_ensembl %in% rownames(expr_tpm_mrna), "\n")
 cat("2. In BRCA_tpm (after meanrow>=1):", target_ensembl %in% rownames(BRCA_tpm), "\n")
 cat("3. In clean_BRCA_tpm (after symbol map):", target_symbol %in% rownames(clean_BRCA_tpm), "\n")
@@ -955,3 +961,159 @@ cat("6. In immune_markers_filtered (GSVA filter):", target_symbol %in% rownames(
 cat("7. In survival_multivariate_filtered:", target_symbol %in% rownames(BRCA_expr_survival_multivariate_filtered), "\n")
 cat("8. In KM_filtered:", target_symbol %in% rownames(BRCA_expr_survival_KM_filtered), "\n")
 cat("9. In final gene list:", target_symbol %in% rownames(BRCA_gene_list_final), "\n")
+
+# extracting informations from it
+# rebuild linc_expr from scratch with correct barcode length
+linc_expr <- as.numeric(expr_tpm_mrna[target_ensembl,
+                                      colnames(expr_tpm_mrna)[substr(colnames(expr_tpm_mrna), 14, 15) == "01"]])
+names(linc_expr) <- substr(
+  colnames(expr_tpm_mrna)[substr(colnames(expr_tpm_mrna), 14, 15) == "01"],
+  1, 15)
+
+# verify
+cat("linc_expr name example:", names(linc_expr)[1], "\n")
+cat("linc_expr name length:", nchar(names(linc_expr)[1]), "\n")
+
+common_samples <- intersect(names(linc_expr), rownames(BRCA_TIL_abis))
+cat("Common samples found:", length(common_samples), "\n")
+
+# run correlation for both CD8 columns
+for (cd8_col in c("T cell CD8+ memory", "T cell CD8+ naive")) {
+  til_vec  <- as.numeric(BRCA_TIL_abis[common_samples, cd8_col])
+  gene_vec <- as.numeric(linc_expr[common_samples])
+  
+  valid <- is.finite(gene_vec) & is.finite(til_vec)
+  test  <- cor.test(gene_vec[valid], til_vec[valid], method = "spearman")
+  
+  cat("\n=== TIL correlation:", cd8_col, "===\n")
+  cat("rho:", round(test$estimate, 4), "\n")
+  cat("p-value:", test$p.value, "\n")
+}
+
+# check barcode overlap with gsva.es
+cat("gsva.es colname example:", colnames(gsva.es)[1], "\n")
+cat("linc_expr_full name example:", names(linc_expr_full)[1], "\n")
+common_gsva <- intersect(names(linc_expr_full), colnames(gsva.es))
+cat("Common samples for GSVA:", length(common_gsva), "\n")
+
+# gsva correlation
+gsva_vec  <- as.numeric(gsva.es["gsva.es", common_gsva])
+gene_vec  <- as.numeric(linc_expr_full[common_gsva])
+
+valid     <- is.finite(gene_vec) & is.finite(gsva_vec)
+gsva_test <- cor.test(gene_vec[valid], gsva_vec[valid], method = "spearman")
+
+cat("=== GSVA immune marker correlation ===\n")
+cat("rho:", round(gsva_test$estimate, 4), "\n")
+cat("p-value:", gsva_test$p.value, "\n")
+
+# survival analysis
+
+# check if LINC00707 is in the survival data
+cat("In survival coef:", target_symbol %in% rownames(BRCA_expr_survival_coef), "\n")
+cat("In KM results:", target_symbol %in% rownames(BRCA_expr_survival_KM), "\n")
+
+# rebuild linc_df preserving barcode rownames
+# make sure this is done, most error happens here !!!!!!
+linc_df            <- data.frame(
+  LINC00707  = linc_expr_full,
+  patient_id = substr(names(linc_expr_full), 1, 12),
+  stringsAsFactors = FALSE)
+colnames(linc_df)[1] <- target_symbol
+
+# verify
+cat("linc_df patient_id example:", linc_df$patient_id[1], "\n")
+cat("survival_data patient_id example:", survival_data$patient_id[1], "\n")
+
+# make sure survival_data is ready
+merged_surv <- na.omit(merge(survival_data, linc_df, by = "patient_id"))
+cat("Samples for survival analysis:", nrow(merged_surv), "\n")
+
+# cox multivariate
+cox_model <- coxph(Surv(OS.time, OS.status) ~ LINC00707, data = merged_surv)
+cox_sum   <- summary(cox_model)
+
+cat("Multivariate Cox")
+cat("coef:", round(cox_sum$coefficients[, "coef"], 4), "\n")
+cat("HR:", round(cox_sum$coefficients[, "exp(coef)"], 4), "\n")
+cat("p-value:", cox_sum$coefficients[, "Pr(>|z|)"], "\n")
+
+# km plot
+cutpoint          <- surv_cutpoint(merged_surv, time = "OS.time",
+                                   event = "OS.status", variables = target_symbol)
+merged_surv$group <- ifelse(merged_surv[, target_symbol] > cutpoint$cutpoint[[1]], "High", "Low")
+cat("\nHigh group n:", sum(merged_surv$group == "High"), "\n")
+cat("Low group n:", sum(merged_surv$group == "Low"), "\n")
+
+logrank_test <- survdiff(Surv(OS.time, OS.status) ~ group, data = merged_surv)
+cat("KM log-rank test")
+cat("p-value:", logrank_test$pval, "\n")
+
+fit <- survfit(Surv(OS.time, OS.status) ~ group, data = merged_surv)
+
+km_linc <- ggsurvplot(
+  fit,
+  data              = merged_surv,
+  title             = paste0(target_symbol, " — TCGA BRCA"),
+  pval              = TRUE,
+  pval.method       = TRUE,
+  conf.int          = FALSE,
+  risk.table        = TRUE,
+  risk.table.height = 0.25,
+  palette           = c("#E7524A", "#4A90D9"),
+  legend.labs       = c("High", "Low"),
+  legend.title      = "Expression",
+  xlab              = "Days",
+  ylab              = "Overall survival probability",
+  ggtheme           = theme_classic(base_size = 12)
+)
+
+# save
+out_path <- file.path(PLOT_DIR, paste0("KM_", target_symbol, ".pdf"))
+pdf(out_path, width = 7, height = 7)
+print(km_linc)
+dev.off()
+cat("Saved:", out_path, "\n")
+
+# ranking
+# compile raw scores
+linc_scores <- data.frame(
+  gene                 = target_symbol,
+  score_TIL            = -0.0309,      # negative of CD8+ memory rho (pipeline used memory)
+  score_GSVA           = -0.2964,      # negative of GSVA rho
+  score_surv_coef      = -0.1034,      # Cox coef
+  score_KM             = -log10(0.006435972 + 1e-10),
+  score_immune_pathway = NA,           # never reached DESeq2/GSEA
+  stringsAsFactors     = FALSE
+)
+
+# normalize using existing ranking min/max ranges
+for (col in score_cols) {
+  existing_vals <- ranking[[col]]
+  val           <- linc_scores[[col]]
+  if (!is.na(val)) {
+    norm_val <- (val - min(existing_vals, na.rm = TRUE)) /
+      diff(range(existing_vals, na.rm = TRUE))
+    norm_val <- pmax(0, pmin(1, norm_val))  # clamp to 0-1
+  } else {
+    norm_val <- 0
+  }
+  linc_scores[[paste0(col, "_norm")]] <- norm_val
+}
+
+linc_scores$final_score   <- rowMeans(linc_scores[, norm_cols], na.rm = TRUE)
+linc_scores$filters_passed <- sum(!is.na(linc_scores[, score_cols]))
+
+# inject into ranking
+ranking_with_linc <- bind_rows(ranking, linc_scores) %>%
+  arrange(desc(final_score)) %>%
+  mutate(rank = row_number())
+
+# report
+linc_row_result <- ranking_with_linc[ranking_with_linc$gene == target_symbol, ]
+cat("LINC00707 in ranking\n")
+cat("Rank:", linc_row_result$rank, "out of", nrow(ranking_with_linc), "\n")
+cat("Final score:", round(linc_row_result$final_score, 4), "\n")
+cat("Filters passed:", linc_row_result$filters_passed, "\n")
+
+save_local(ranking_with_linc, "BRCA_gene_ranking_with_LINC00707.csv")
